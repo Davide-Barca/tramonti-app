@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+/* shadcn/ui theme tokens go here (components.json -> tailwind.css). */
+@theme inline {
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+}

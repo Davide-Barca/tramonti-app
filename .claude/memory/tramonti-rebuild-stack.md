@@ -12,6 +12,7 @@ Rebuild from scratch (decided 2026-10-04) of an existing React app in production
 
 - Single Next.js app, App Router, TypeScript, Server Components first.
 - Route groups `(site)` + `(admin)`; auth guard on `/admin` via `proxy.ts` (Next 16 middleware) + server-side session check (DAL).
+- Scaffold done 2026-10-04 on `dev`: code in `src/`, two root layouts (`app/[locale]/layout.tsx` for site, `app/(admin)/layout.tsx` for admin, admin NOT under `[locale]`), `experimental.globalNotFound`, separate `styles/site.css` + `styles/admin.css`. Every `[locale]` page/layout/generateMetadata calls `initLocale(params)` (src/i18n/locale.ts). Auth DAL in `src/lib/auth/session.ts` is a presence-only stub until backend contract is known.
 - Site: Tailwind v4. Admin: shadcn/ui + Redux Toolkit (Provider only in admin layout).
 - Data from API, mostly static, rarely changes → cached fetch + long revalidate + tags, on-demand `revalidateTag`.
 - i18n: Italian only now, ready for more (next-intl, `localePrefix: "as-needed"`).

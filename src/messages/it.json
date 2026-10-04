@@ -1,0 +1,15 @@
+{
+  "Metadata": {
+    "siteName": "Tramonti",
+    "title": "Tramonti",
+    "description": "Descrizione del sito da definire."
+  },
+  "HomePage": {
+    "title": "Tramonti"
+  },
+  "NotFound": {
+    "title": "Pagina non trovata",
+    "description": "La pagina che cerchi non esiste o è stata spostata.",
+    "backHome": "Torna alla home"
+  }
+}
