@@ -1,0 +1,2 @@
+- [SEO rules frontend](seo-rules-frontend.md) — public site code must always follow SEO best practices (semantic HTML, metadata, CWV)
+- [Rebuild stack](tramonti-rebuild-stack.md) — agreed Next.js/Tailwind v4/shadcn/Redux/GCS/Vercel architecture for tramonti-app
