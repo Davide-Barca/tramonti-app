@@ -17,13 +17,20 @@ npm run dev
 
 ## Scripts
 
-| Script              | Description                           |
-| ------------------- | ------------------------------------- |
-| `npm run dev`       | Dev server                            |
-| `npm run build`     | Production build                      |
-| `npm run start`     | Serve the production build            |
-| `npm run lint`      | ESLint                                |
-| `npm run typecheck` | Generate route types + `tsc --noEmit` |
+| Script              | Description                                |
+| ------------------- | ------------------------------------------ |
+| `npm run dev`       | Dev server                                 |
+| `npm run build`     | Production build                           |
+| `npm run start`     | Serve the production build                 |
+| `npm run lint`      | ESLint                                     |
+| `npm run typecheck` | Generate route types + `tsc --noEmit`      |
+| `npm run format`    | Prettier write (`format:check` for CI)     |
+| `npm run test`      | Vitest unit/component tests (`test:watch`) |
+| `npm run test:e2e`  | Playwright E2E on a production build       |
+| `npm run check`     | lint + typecheck + format:check + test     |
+
+First E2E run: `npx playwright install chromium`.
+A pre-commit hook (husky + lint-staged) runs ESLint and Prettier on staged files.
 
 ## Structure
 

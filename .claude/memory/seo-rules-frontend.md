@@ -13,6 +13,7 @@ All code/components/HTML on the public website frontend (`(site)` route group) m
 **Why:** User stated it as a fundamental, always-on rule for the tramonti-app rebuild (Next.js App Router). Site is mostly static content, SEO is primary goal.
 
 **How to apply:**
+
 - Semantic HTML: one `<h1>` per page, ordered heading hierarchy, `<header>/<nav>/<main>/<article>/<section>/<footer>`, real `<a href>` via `next/link` (no onClick navigation), `<button>` only for actions.
 - Metadata API: `generateMetadata`/`metadata` per page (title, description, canonical, openGraph, twitter, alternates/hreflang ready for future locales), `lang="it"` on `<html>`.
 - `sitemap.ts`, `robots.ts`, JSON-LD structured data (Organization/LocalBusiness/BreadcrumbList etc. as fits).
