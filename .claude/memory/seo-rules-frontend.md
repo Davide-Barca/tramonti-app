@@ -22,4 +22,4 @@ All code/components/HTML on the public website frontend (`(site)` route group) m
 - Core Web Vitals: minimal client JS, no layout shift, lazy below-the-fold.
 - Not required for `(admin)` — admin should be `noindex`.
 
-Related: [[tramonti-rebuild-stack]]
+Canonical checklist: AGENTS.md "SEO" section. Related: [[tramonti-rebuild-stack]]

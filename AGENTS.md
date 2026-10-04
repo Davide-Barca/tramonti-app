@@ -7,3 +7,83 @@ This version has breaking changes — APIs, conventions, and file structure may 
 This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
 <!-- END:nextjs-agent-rules -->
+
+# tramonti-app: agent rules
+
+Rules for every AI agent working in this repo. This file is the canonical source of project rules. Do not edit the `nextjs-agent-rules` block above: `next dev` rewrites it, and everything below it is preserved.
+
+## Project
+
+- Rebuild of a React app in production: **public website + admin portal**. Express backend is a separate repo and out of scope.
+- Next.js 16 App Router, React 19, TypeScript strict, Tailwind v4, next-intl. Deploy on Vercel. Node 24.x, **npm** only.
+- Keep the current site design; revise components only where needed.
+
+## Before you start
+
+1. Read `.claude/memory/project-status.md` (done steps, next steps, open TODOs) and `.claude/memory/MEMORY.md` (index of project decisions).
+2. Work on `dev`. `main` is production. Never push, merge into `main` or start the next roadmap step without explicit user approval.
+
+## Commands
+
+- `npm run check`: lint + typecheck + format:check + unit tests. **Must pass before every commit.**
+- `npm run test:e2e`: Playwright on a production build. Run it when routing, metadata, SEO or auth change.
+- `npm run format`: Prettier (Tailwind classes are sorted automatically).
+- A husky pre-commit hook runs lint-staged. Never bypass it with `--no-verify`.
+
+## Architecture
+
+- Code lives in `src/`. Path alias `@/*` → `src/*`.
+- Two root layouts:
+  - `src/app/[locale]/`: public site (`(site)` route group), Tailwind v4, `styles/site.css`.
+  - `src/app/(admin)/admin/`: admin portal, **not** under `[locale]`, shadcn/ui + Redux Toolkit, `styles/admin.css`.
+  - Unmatched URLs are handled by `src/app/global-not-found.tsx` (`experimental.globalNotFound`).
+- `src/proxy.ts` (Next 16 replacement of `middleware.ts`): next-intl routing + optimistic `/admin` guard.
+- **Server Components by default.** Add `"use client"` only for interactivity, as low in the tree as possible. No Redux, no client providers in the public site.
+- Data comes from the Express API, is mostly static and changes rarely: fetch in Server Components with caching + tags, revalidate on demand after admin mutations.
+- Admin image uploads go to Google Cloud Storage via signed URLs (direct browser upload, never through Vercel functions).
+
+## i18n
+
+- Italian only for now, structured for more locales (`localePrefix: "as-needed"`, so `it` has no URL prefix).
+- Every `[locale]` layout, page and `generateMetadata` must call `initLocale(params)` from `@/i18n/locale`.
+- Public site: use `Link`, `redirect` and `getPathname` from `@/i18n/navigation`, not `next/link` / `next/navigation`.
+- No hardcoded UI strings in the public site: add them to `src/messages/it.json` (typed via `src/types/next-intl.d.ts`).
+
+## SEO (mandatory for the public site)
+
+Every component, page and HTML tag in `(site)` must follow SEO best practices:
+
+- Semantic HTML: exactly one `<h1>` per page, ordered headings, `header`/`nav`/`main`/`article`/`section`/`footer`. The `(site)` layout already renders `<main>`: pages must not add another.
+- Navigation through real links (`Link` with `href`), never `onClick` navigation. `<button>` only for actions.
+- Every page exports `generateMetadata` with title, description and `alternates: localeAlternates(locale, href)` (canonical + hreflang).
+- Images: `next/image` with meaningful `alt`, explicit size, `priority` only on the LCP image. Fonts: `next/font`.
+- Indexable content must be in the server-rendered HTML (no client-only rendering).
+- Add structured data (JSON-LD) where relevant. New public pages go in `src/app/sitemap.ts`.
+- Core Web Vitals: minimal client JS, no layout shift, lazy-load below the fold.
+- Admin is always `noindex` (metadata + `X-Robots-Tag` + robots.txt). Keep it that way.
+- SEO changes need an assertion in `e2e/seo.spec.ts`.
+
+## Auth & security
+
+- `proxy.ts` only checks that the session cookie **exists**. That is not authorization.
+- Every admin layout, page, Server Action and Route Handler must call `verifySession()` from `@/lib/auth/session`.
+- `src/lib/auth/session.ts` is currently a presence-only **stub** (backend contract unknown). It must not reach production as is.
+- Secrets (GCS service account, API keys) are server-only env vars: never `NEXT_PUBLIC_*`, never committed. Only `.env.example` is versioned.
+
+## Testing
+
+- Vitest + Testing Library: colocated `src/**/*.test.ts(x)`. Add `// @vitest-environment node` for server code.
+- Playwright: `e2e/*.spec.ts`, Chromium desktop + Pixel 7, production build on port 3100.
+
+## Git
+
+- Conventional Commits (`feat:`, `fix:`, `chore:`…), English, imperative mood.
+- Commit only when the user asks.
+
+## Docs & memory sync (required)
+
+When you add or change files, folders, scripts, tooling or conventions, update **in the same change**:
+
+1. `AGENTS.md` (this file): rules and conventions agents must follow.
+2. `README.md`: human-facing setup, scripts and structure.
+3. `.claude/memory/`: decisions and status (`project-status.md` at least), with the index in `MEMORY.md`. The folder is versioned on purpose: shared across machines and agents.

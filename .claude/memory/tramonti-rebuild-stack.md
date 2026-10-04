@@ -17,9 +17,9 @@ Rebuild from scratch (decided 2026-10-04) of an existing React app in production
 - Data from API, mostly static, rarely changes → cached fetch + long revalidate + tags, on-demand `revalidateTag`.
 - i18n: Italian only now, ready for more (next-intl, `localePrefix: "as-needed"`).
 - Admin image upload (single/multiple) → Google Cloud Storage bucket via signed URLs (direct upload, avoid Vercel 4.5MB limit).
-- Deploy Vercel, npm, ESLint + Prettier, Vitest + Testing Library + Playwright.
+- Deploy Vercel, npm, ESLint + Prettier, Vitest + Testing Library + Playwright (details: [[tooling-testing]]).
 - Branches: `main` + `dev`.
 - Keep current design, revise some components where needed. Old code path not yet provided.
 
 **Why:** User-confirmed decisions; user prefers caveman mode for this conversation.
-**How to apply:** Follow these when scaffolding/coding; don't re-ask. See [[seo-rules-frontend]].
+**How to apply:** Follow these when scaffolding/coding; don't re-ask. Enforced rules are in AGENTS.md. See [[seo-rules-frontend]].
