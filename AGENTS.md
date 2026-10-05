@@ -38,6 +38,25 @@ Rules for every AI agent working in this repo. This file is the canonical source
   - `src/app/(admin)/admin/`: admin portal, **not** under `[locale]`, shadcn/ui + Redux Toolkit, `styles/admin.css`.
   - Unmatched URLs are handled by `src/app/global-not-found.tsx` (`experimental.globalNotFound`).
 - `src/proxy.ts` (Next 16 replacement of `middleware.ts`): next-intl routing + optimistic `/admin` guard.
+
+### Code organization
+
+```
+src/app/…/_components/   used by ONE route only (colocated, private folder)
+src/components/site/     public site: layout/ (header, footer, nav), sections/ (page blocks), ui/ (primitives)
+src/components/admin/    admin: ui/ (shadcn-generated, alias in components.json), layout/, hooks/
+src/components/shared/   side-agnostic only (e.g. JSON-LD, icons)
+src/features/<domain>/   types.ts (zod schemas + types), queries.ts (cached reads), actions.ts (admin Server Actions)
+src/lib/api/client.ts    apiFetch(): server-only fetch to the Express API, zod-validated
+src/store/               Redux Toolkit, admin only
+```
+
+- A component starts in the route's `_components/` and moves to `src/components/` only when a second route needs it.
+- Pages in `app/` stay thin: fetch, metadata, composition.
+- **Import boundaries are enforced by ESLint** (`no-restricted-imports` in `eslint.config.mjs`): the site cannot import `components/admin`, `store`, Redux; the admin cannot import `components/site`; shared code (`lib`, `features`, `i18n`, `components/shared`) imports neither side. The site also cannot import `next/link` or `redirect`/`useRouter`/`usePathname` from `next/navigation`. Do not disable these rules: move the code to the right place instead.
+- Every API call goes through `apiFetch(path, { schema, next: { tags, revalidate } })`. Never call `fetch` on the API directly, never skip the zod schema.
+- `queries.ts`, `actions.ts` and anything touching the API or secrets start with `import "server-only"`.
+- Cache tags are defined once per domain in `features/<domain>/` and shared by reads (site) and invalidation (admin: `updateTag` in Server Actions for read-your-own-writes, `revalidateTag(tag, "max")` otherwise).
 - **Server Components by default.** Add `"use client"` only for interactivity, as low in the tree as possible. No Redux, no client providers in the public site.
 - Data comes from the Express API, is mostly static and changes rarely: fetch in Server Components with caching + tags, revalidate on demand after admin mutations.
 - Admin image uploads go to Google Cloud Storage via signed URLs (direct browser upload, never through Vercel functions).
@@ -68,7 +87,7 @@ Every component, page and HTML tag in `(site)` must follow SEO best practices:
 - `proxy.ts` only checks that the session cookie **exists**. That is not authorization.
 - Every admin layout, page, Server Action and Route Handler must call `verifySession()` from `@/lib/auth/session`.
 - `src/lib/auth/session.ts` is currently a presence-only **stub** (backend contract unknown). It must not reach production as is.
-- Secrets (GCS service account, API keys) are server-only env vars: never `NEXT_PUBLIC_*`, never committed. Only `.env.example` is versioned.
+- `API_URL` (Express base URL) is server-only. Secrets (GCS service account, API keys) are server-only env vars: never `NEXT_PUBLIC_*`, never committed. Only `.env.example` is versioned.
 
 ## Testing
 
@@ -78,7 +97,7 @@ Every component, page and HTML tag in `(site)` must follow SEO best practices:
 ## Git
 
 - Conventional Commits (`feat:`, `fix:`, `chore:`…), English, imperative mood.
-- Commit only when the user asks.
+- Commit only when the user explicitly asks. Never run or propose commit commands on your own (not even in a plan); if a commit seems advisable, just say so.
 
 ## Docs & memory sync (required)
 

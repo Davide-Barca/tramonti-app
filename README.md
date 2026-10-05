@@ -22,6 +22,7 @@ npm run dev
 | Variable               | Description                                             |
 | ---------------------- | ------------------------------------------------------- |
 | `NEXT_PUBLIC_SITE_URL` | Public site URL, no trailing slash (canonical, sitemap) |
+| `API_URL`              | Express API base URL (server-only)                      |
 
 Set them on Vercel for every environment. Never commit `.env*` files except `.env.example`.
 
@@ -58,15 +59,25 @@ src/
       admin/(dashboard)/  session-protected area
     global-not-found.tsx  404 for unmatched URLs (multiple root layouts)
     robots.ts, sitemap.ts
+    **/_components/    components used by a single route (colocated)
+  components/
+    site/              public site: layout/, sections/, ui/
+    admin/             admin: ui/ (shadcn), layout/, hooks/
+    shared/            side-agnostic components
+  features/<domain>/   types.ts (zod), queries.ts (cached reads), actions.ts (admin mutations)
+  store/               Redux Toolkit (admin only)
   i18n/                next-intl routing, request config, navigation, initLocale
   messages/            translations (it.json)
   lib/
+    api/client.ts      apiFetch(): server-only, zod-validated fetch to the Express API
     auth/              session DAL (verifySession) + constants
     seo.ts             canonical/hreflang helper, OG locales
     fonts.ts, site.ts
   styles/              site.css (Tailwind v4), admin.css (shadcn/ui)
   types/               global type augmentation (next-intl)
   proxy.ts             i18n routing + optimistic /admin guard
+components.json        shadcn/ui config (components land in src/components/admin/ui)
+eslint.config.mjs      Next rules + import boundaries site/admin/shared
 next.config.ts         next-intl plugin, globalNotFound, X-Robots-Tag on /admin
 vitest.config.mts      jsdom, tsconfig paths, setup in vitest.setup.ts
 playwright.config.ts   Chromium desktop + Pixel 7, prod build on port 3100
@@ -80,6 +91,10 @@ playwright.config.ts   Chromium desktop + Pixel 7, prod build on port 3100
   New locale: add it to `src/i18n/routing.ts` + `src/messages/<locale>.json`.
 - **SEO** (public site): semantic HTML, one `<h1>` per page, `generateMetadata` with
   `localeAlternates()`, `next/image` with meaningful `alt`. Admin is always `noindex`.
+- **Structure**: components start in the route's `_components/` and move to
+  `src/components/{site,admin,shared}` when reused. ESLint blocks site ↔ admin imports.
+- **Data**: all API calls go through `apiFetch()` with a zod schema and cache tags
+  defined in `src/features/<domain>/`.
 - **Auth**: `proxy.ts` only checks cookie presence. Every admin layout, page,
   Server Action and Route Handler must call `verifySession()`.
 

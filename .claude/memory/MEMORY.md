@@ -1,5 +1,7 @@
 - [SEO rules frontend](seo-rules-frontend.md) — public site code must always follow SEO best practices (semantic HTML, metadata, CWV)
 - [Rebuild stack](tramonti-rebuild-stack.md) — agreed Next.js/Tailwind v4/shadcn/Redux/GCS/Vercel architecture for tramonti-app
 - [Tooling & testing](tooling-testing.md) — Prettier/husky/Vitest/Playwright setup and gotchas (next-intl inline, @types/node 24, audit)
+- [Code structure](code-structure.md) — components site/admin/shared, features/<domain>, apiFetch + zod, ESLint import boundaries
 - [Project status](project-status.md) — done steps, next steps, open TODOs (auth stub, fonts, favicon, header/footer)
+- [No commit proposals](no-commit-proposals.md) — never run/propose commit commands unless user asks; at most say a commit is advisable
 - [Docs sync](docs-sync.md) — AGENTS.md is the canonical agent rules file (top priority); keep it + README + memory in sync

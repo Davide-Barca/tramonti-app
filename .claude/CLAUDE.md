@@ -8,5 +8,7 @@ Save new project memories/decisions there — not in the global `~/.claude/proje
 @memory/tramonti-rebuild-stack.md
 @memory/seo-rules-frontend.md
 @memory/tooling-testing.md
+@memory/code-structure.md
 @memory/project-status.md
 @memory/docs-sync.md
+@memory/no-commit-proposals.md
