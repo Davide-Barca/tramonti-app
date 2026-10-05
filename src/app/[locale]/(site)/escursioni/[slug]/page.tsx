@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { JsonLd } from "@/components/shared/JsonLd";
-import { Breadcrumbs } from "@/components/site/ui/Breadcrumbs";
+import { PageIntro } from "@/components/site/sections/PageIntro";
 import { getEscursione, getEscursioni } from "@/features/escursioni/queries";
 import { initLocale } from "@/i18n/locale";
 import { absoluteUrl, localeAlternates } from "@/lib/seo";
@@ -43,15 +43,15 @@ export default async function ExcursionPage({
 
   return (
     <article>
-      <Breadcrumbs
-        items={[
+      <PageIntro
+        title={escursione.title}
+        lead={escursione.excerpt}
+        breadcrumbs={[
           { name: nav("home"), href: "/" },
           { name: nav("excursions"), href: "/escursioni" },
           { name: escursione.title, href },
         ]}
       />
-      <h1>{escursione.title}</h1>
-      <p>{escursione.excerpt}</p>
       <JsonLd
         data={{
           "@context": "https://schema.org",

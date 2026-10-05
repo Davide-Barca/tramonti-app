@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
+import { PageIntro } from "@/components/site/sections/PageIntro";
 import { initLocale } from "@/i18n/locale";
 import { staticPageMetadata } from "@/lib/seo";
 
@@ -14,11 +15,18 @@ export default async function AboutPage({
   params,
 }: PageProps<"/[locale]/chi-siamo">) {
   await initLocale(params);
-  const t = await getTranslations("AboutPage");
+  const [t, nav] = await Promise.all([
+    getTranslations("AboutPage"),
+    getTranslations("Navigation"),
+  ]);
 
   return (
-    <section>
-      <h1>{t("title")}</h1>
-    </section>
+    <PageIntro
+      title={t("title")}
+      breadcrumbs={[
+        { name: nav("home"), href: "/" },
+        { name: nav("about"), href: "/chi-siamo" },
+      ]}
+    />
   );
 }

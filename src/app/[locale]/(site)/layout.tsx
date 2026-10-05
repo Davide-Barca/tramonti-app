@@ -1,7 +1,9 @@
+import { SiteHeader } from "@/components/site/layout/SiteHeader";
+
 export default function SiteLayout({ children }: LayoutProps<"/[locale]">) {
   return (
     <>
-      {/* TODO: <SiteHeader /> with <nav> from current design */}
+      <SiteHeader />
       <main id="main-content" className="flex-1">
         {children}
       </main>

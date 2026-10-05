@@ -46,7 +46,7 @@ Set them on Vercel for every environment. Never commit `.env*` files except `.en
 
 ```
 AGENTS.md              rules for AI agents (canonical; CLAUDE.md imports it)
-.claude/               Claude Code project memory (versioned, shared across machines)
+.claude/               project memory (memory/) + design system docs (design/), versioned and shared
 .husky/pre-commit      runs lint-staged (eslint --fix + prettier) on staged files
 .vscode/               format on save, recommended extensions
 e2e/                   Playwright specs (seo, admin)
@@ -65,7 +65,8 @@ src/
     robots.ts, sitemap.ts
     **/_components/    components used by a single route (colocated)
   components/
-    site/              public site: layout/, sections/, ui/
+    site/              public site: layout/ (SiteHeader, NavLink, nav-items),
+                       sections/ (PageIntro, TourList), ui/ (Container, Section, Heading, Prose, Card, Breadcrumbs)
     admin/             admin: ui/ (shadcn), layout/, hooks/
     shared/            side-agnostic components
   features/<domain>/   types.ts (zod), queries.ts (cached reads), actions.ts (admin mutations)
@@ -77,8 +78,9 @@ src/
     api/client.ts      apiFetch(): server-only, zod-validated fetch to the Express API
     auth/              session DAL (verifySession) + constants
     seo.ts             canonical/hreflang helper, OG locales
+    utils.ts           cn() = clsx + tailwind-merge (aware of custom tokens)
     fonts.ts, site.ts
-  styles/              site.css (Tailwind v4), admin.css (shadcn/ui)
+  styles/              site.css (Tailwind v4: palette, tokens, base, .prose), admin.css (shadcn/ui)
   types/               global type augmentation (next-intl)
   proxy.ts             i18n routing + optimistic /admin guard
 components.json        shadcn/ui config (components land in src/components/admin/ui)
@@ -97,6 +99,9 @@ playwright.config.ts   Chromium desktop + Pixel 7, prod build on port 3100
   New locale: add it to `src/i18n/routing.ts` + `src/messages/<locale>.json`.
 - **SEO** (public site): semantic HTML, one `<h1>` per page, `generateMetadata` with
   `localeAlternates()`, `next/image` with meaningful `alt`. Admin is always `noindex`.
+- **Styling**: Tailwind utilities inline, semantic tokens only (`bg-muted`, `text-primary`…),
+  `cn()` + `cva` for variants. Tokens and rules: `src/styles/site.css`, AGENTS.md "Styling" and
+  the design system docs in `.claude/design/`.
 - **Structure**: components start in the route's `_components/` and move to
   `src/components/{site,admin,shared}` when reused. ESLint blocks site ↔ admin imports.
 - **Data**: all API calls go through `apiFetch()` with a zod schema and cache tags

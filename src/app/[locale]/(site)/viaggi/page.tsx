@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { Breadcrumbs } from "@/components/site/ui/Breadcrumbs";
+import { PageIntro } from "@/components/site/sections/PageIntro";
+import { TourList } from "@/components/site/sections/TourList";
 import { getViaggi } from "@/features/viaggi/queries";
 import { initLocale } from "@/i18n/locale";
-import { Link } from "@/i18n/navigation";
 import { staticPageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({
@@ -24,37 +24,23 @@ export default async function TripsPage({
   ]);
 
   return (
-    <section>
-      <Breadcrumbs
-        items={[
+    <>
+      <PageIntro
+        title={t("title")}
+        breadcrumbs={[
           { name: nav("home"), href: "/" },
           { name: nav("trips"), href: "/viaggi" },
         ]}
       />
-      <h1>{t("title")}</h1>
-      {viaggi.length === 0 ? (
-        <p>{t("empty")}</p>
-      ) : (
-        <ul>
-          {viaggi.map((v) => (
-            <li key={v.slug}>
-              <article>
-                <h2>
-                  <Link
-                    href={{
-                      pathname: "/viaggi/[slug]",
-                      params: { slug: v.slug },
-                    }}
-                  >
-                    {v.title}
-                  </Link>
-                </h2>
-                <p>{v.excerpt}</p>
-              </article>
-            </li>
-          ))}
-        </ul>
-      )}
-    </section>
+      <TourList
+        emptyText={t("empty")}
+        items={viaggi.map(({ slug, title, excerpt }) => ({
+          slug,
+          title,
+          excerpt,
+          href: { pathname: "/viaggi/[slug]", params: { slug } },
+        }))}
+      />
+    </>
   );
 }

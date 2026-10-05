@@ -15,14 +15,22 @@ export async function Breadcrumbs({ items }: { items: Crumb[] }) {
 
   return (
     <>
-      <nav aria-label={t("breadcrumb")}>
-        <ol>
+      <nav aria-label={t("breadcrumb")} className="text-sm">
+        <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-muted-foreground">
           {items.map((item, i) => (
-            <li key={i}>
+            <li key={i} className="flex items-center gap-x-2">
+              {i > 0 && <span aria-hidden="true">/</span>}
               {i < items.length - 1 ? (
-                <Link href={item.href}>{item.name}</Link>
+                <Link
+                  href={item.href}
+                  className="underline-offset-4 hover:text-foreground hover:underline"
+                >
+                  {item.name}
+                </Link>
               ) : (
-                <span aria-current="page">{item.name}</span>
+                <span aria-current="page" className="text-foreground">
+                  {item.name}
+                </span>
               )}
             </li>
           ))}

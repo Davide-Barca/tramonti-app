@@ -27,10 +27,10 @@ export const routing = defineRouting({
 
 export type Locale = (typeof routing.locales)[number];
 export type Pathname = keyof typeof routing.pathnames;
+/** Routes without dynamic segments: usable as a plain string href. */
+export type StaticPathname = Exclude<Pathname, `${string}[${string}`>;
 
 /** Routes without dynamic segments (sitemap, e2e). */
 export const staticPathnames = (
   Object.keys(routing.pathnames) as Pathname[]
-).filter(
-  (p): p is Exclude<Pathname, `${string}[${string}`> => !p.includes("["),
-);
+).filter((p): p is StaticPathname => !p.includes("["));

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
+import { PageIntro } from "@/components/site/sections/PageIntro";
 import { initLocale } from "@/i18n/locale";
 import { staticPageMetadata } from "@/lib/seo";
 
@@ -18,11 +19,18 @@ export default async function CustomExcursionsPage({
   params,
 }: PageProps<"/[locale]/escursioni-su-misura">) {
   await initLocale(params);
-  const t = await getTranslations("CustomExcursionsPage");
+  const [t, nav] = await Promise.all([
+    getTranslations("CustomExcursionsPage"),
+    getTranslations("Navigation"),
+  ]);
 
   return (
-    <section>
-      <h1>{t("title")}</h1>
-    </section>
+    <PageIntro
+      title={t("title")}
+      breadcrumbs={[
+        { name: nav("home"), href: "/" },
+        { name: nav("customExcursions"), href: "/escursioni-su-misura" },
+      ]}
+    />
   );
 }

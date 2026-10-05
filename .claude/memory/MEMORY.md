@@ -3,6 +3,8 @@
 - [Tooling & testing](tooling-testing.md) — Prettier/husky/Vitest/Playwright setup and gotchas (next-intl inline, @types/node 24, audit)
 - [Code structure](code-structure.md) — components site/admin/shared, features/<domain>, apiFetch + zod, ESLint import boundaries
 - [Public routes](public-routes.md) — route list, Italian slugs, typed pathnames, iubenda legal pages, fixtures until API
+- [Styling](styling.md) — Tailwind inline + semantic tokens, sand/olive placeholder palette, clamp headings, cn + cva, no dark mode
 - [Project status](project-status.md) — done steps, next steps, open TODOs (auth stub, fonts, favicon, header/footer)
 - [No commit proposals](no-commit-proposals.md) — never run/propose commit commands unless user asks; at most say a commit is advisable
+- [Caveman replies](caveman-replies.md) — always reply in caveman style (chat only; code/docs/commits normal)
 - [Docs sync](docs-sync.md) — AGENTS.md is the canonical agent rules file (top priority); keep it + README + memory in sync

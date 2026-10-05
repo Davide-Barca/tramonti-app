@@ -21,7 +21,8 @@ Rules for every AI agent working in this repo. This file is the canonical source
 ## Before you start
 
 1. Read `.claude/memory/project-status.md` (done steps, next steps, open TODOs) and `.claude/memory/MEMORY.md` (index of project decisions).
-2. Work on `dev`. `main` is production. Never push, merge into `main` or start the next roadmap step without explicit user approval.
+2. Before creating or restyling any public-site component, section or page: read `.claude/design/` (start from `README.md`). It is the design system reference (tokens, components, sections, patterns, checklist) for every agent.
+3. Work on `dev`. `main` is production. Never push, merge into `main` or start the next roadmap step without explicit user approval.
 
 ## Commands
 
@@ -75,7 +76,22 @@ src/store/               Redux Toolkit, admin only
 - Static pages: `generateMetadata` returns `staticPageMetadata(locale, "<Namespace>", href)` (`src/lib/seo.ts`); texts in `src/messages/it.json` under `<Namespace>` with `metaTitle`, `metaDescription`, `title`. Add new namespaces to `StaticPageNamespace`.
 - Detail pages (`[slug]`): `generateStaticParams` from the feature query, `notFound()` for unknown slugs, `Breadcrumbs` (visible + BreadcrumbList JSON-LD) and `TouristTrip` JSON-LD via `components/shared/JsonLd`.
 - Legal texts come from iubenda (`features/legal/queries.ts`, server-rendered, `IUBENDA_POLICY_ID` + `IUBENDA_TERMS_ID`). Without ids the page shows a placeholder.
+- Header: `components/site/layout/SiteHeader.tsx` (Server Component, minimal styling with semantic tokens until the old design is ported; mark the current page with underline, not bold, to avoid layout shift) rendered by the `(site)` layout. Main menu items live in `components/site/layout/nav-items.ts` (`mainNavItems`: typed `StaticPathname` + `Navigation` message key); currently Chi siamo, Escursioni, Viaggi, Contatti. Escursioni su misura, Apprendimento and legal pages are not in the header. `NavLink` is the only client part (`usePathname` for `aria-current="page"`, prefix match so detail pages mark their section); labels are translated on the server and passed as children.
 - No hardcoded UI strings in the public site: add them to `src/messages/it.json` (typed via `src/types/next-intl.d.ts`).
+
+## Styling (public site)
+
+Design details (values, component APIs, section recipes, checklist): **`.claude/design/`**. Rules below are mandatory.
+
+- **Tailwind utilities inline** in JSX. Reuse = React components (`Container`, `Section`, `Heading`…), never `@apply` classes. `@apply` is allowed only inside `.prose`.
+- `src/styles/site.css` holds only: primitive palette (`:root`, `--sand-*`, `--olive-*`), theme tokens (`@theme inline`), `@layer base` (body colors, `text-wrap`, global `:focus-visible` outline, `::selection`), `.prose` for HTML we cannot add classes to (iubenda, rich text).
+- **Semantic tokens only** in components: `background`, `foreground`, `muted`, `muted-foreground`, `border`, `primary`, `primary-hover`, `primary-foreground`, `accent`. Tailwind's default palette is disabled (`--color-*: initial`): `bg-neutral-100` etc. do not exist. Never use primitives (`--sand-*`, `--olive-*`) or hex outside `site.css`. New color = new semantic token.
+- Other tokens: fonts `font-sans`, `font-display`; fluid headings `text-display|h1|h2|h3` (`clamp()`); `max-w-page` (72rem), `max-w-narrow` (42rem); `py-section` (fluid); `rounded-card`. Adding a size/spacing/container/radius token? Register it in `extendTailwindMerge` in `src/lib/utils.ts` too, or `cn()` will drop it.
+- No arbitrary values (`w-[37px]`, `text-[#fff]`): add a token. `rem`-based scale, mobile-first (`md:`/`lg:` add on top).
+- No layout shift: explicit image sizes; state changes (active, hover) must not change element size (underline/color, not bold).
+- Every component accepts `className` and merges it with `cn()` (`@/lib/utils`). Variants with `cva` inside the component, no long ternaries in class strings.
+- Building blocks: `components/site/ui/` (`Container`, `Section`, `Heading`, `Prose`, `Card`, `Breadcrumbs`) and page blocks `components/site/sections/` (`PageIntro` first on every page, `TourList`). APIs and recipes in `.claude/design/components.md` and `sections.md`.
+- Palette is a placeholder (warm sand neutrals + military green `primary`, AA contrast checked). No dark mode for now.
 
 ## SEO (mandatory for the public site)
 
@@ -100,7 +116,7 @@ Every component, page and HTML tag in `(site)` must follow SEO best practices:
 
 ## Testing
 
-- Vitest + Testing Library: colocated `src/**/*.test.ts(x)`. Add `// @vitest-environment node` for server code.
+- Vitest + Testing Library: colocated `src/**/*.test.ts(x)`. Add `// @vitest-environment node` for server code. DOM cleanup runs after each test (`vitest.setup.ts`). Client components using `@/i18n/navigation`: mock that module (see `NavLink.test.tsx`).
 - Playwright: `e2e/*.spec.ts`, Chromium desktop + Pixel 7, production build on port 3100.
 
 ## Git
@@ -115,3 +131,4 @@ When you add or change files, folders, scripts, tooling or conventions, update *
 1. `AGENTS.md` (this file): rules and conventions agents must follow.
 2. `README.md`: human-facing setup, scripts and structure.
 3. `.claude/memory/`: decisions and status (`project-status.md` at least), with the index in `MEMORY.md`. The folder is versioned on purpose: shared across machines and agents.
+4. `.claude/design/`: when tokens, components, variants, sections or visual patterns change.

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { JsonLd } from "@/components/shared/JsonLd";
-import { Breadcrumbs } from "@/components/site/ui/Breadcrumbs";
+import { PageIntro } from "@/components/site/sections/PageIntro";
 import { getViaggio, getViaggi } from "@/features/viaggi/queries";
 import { initLocale } from "@/i18n/locale";
 import { absoluteUrl, localeAlternates } from "@/lib/seo";
@@ -43,15 +43,15 @@ export default async function TripPage({
 
   return (
     <article>
-      <Breadcrumbs
-        items={[
+      <PageIntro
+        title={viaggio.title}
+        lead={viaggio.excerpt}
+        breadcrumbs={[
           { name: nav("home"), href: "/" },
           { name: nav("trips"), href: "/viaggi" },
           { name: viaggio.title, href },
         ]}
       />
-      <h1>{viaggio.title}</h1>
-      <p>{viaggio.excerpt}</p>
       <JsonLd
         data={{
           "@context": "https://schema.org",
