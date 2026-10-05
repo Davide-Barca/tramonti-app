@@ -4,8 +4,71 @@
     "title": "Tramonti",
     "description": "Descrizione del sito da definire."
   },
+  "Navigation": {
+    "home": "Home",
+    "about": "Chi siamo",
+    "excursions": "Escursioni",
+    "customExcursions": "Escursioni su misura",
+    "trips": "Viaggi",
+    "learning": "Apprendimento",
+    "contact": "Contatti",
+    "privacy": "Privacy policy",
+    "cookie": "Cookie policy",
+    "terms": "Termini e condizioni",
+    "breadcrumb": "Percorso di navigazione"
+  },
   "HomePage": {
     "title": "Tramonti"
+  },
+  "AboutPage": {
+    "metaTitle": "Chi siamo",
+    "metaDescription": "Chi siamo: descrizione da definire.",
+    "title": "Chi siamo"
+  },
+  "ExcursionsPage": {
+    "metaTitle": "Escursioni",
+    "metaDescription": "Le nostre escursioni: descrizione da definire.",
+    "title": "Escursioni",
+    "empty": "Nessuna escursione disponibile al momento."
+  },
+  "CustomExcursionsPage": {
+    "metaTitle": "Escursioni su misura",
+    "metaDescription": "Escursioni su misura: descrizione da definire.",
+    "title": "Escursioni su misura"
+  },
+  "TripsPage": {
+    "metaTitle": "Viaggi",
+    "metaDescription": "I nostri viaggi: descrizione da definire.",
+    "title": "Viaggi",
+    "empty": "Nessun viaggio disponibile al momento."
+  },
+  "LearningPage": {
+    "metaTitle": "Apprendimento",
+    "metaDescription": "Apprendimento: descrizione da definire.",
+    "title": "Apprendimento"
+  },
+  "ContactPage": {
+    "metaTitle": "Contatti",
+    "metaDescription": "Contatti: descrizione da definire.",
+    "title": "Contatti"
+  },
+  "PrivacyPage": {
+    "metaTitle": "Privacy policy",
+    "metaDescription": "Informativa sul trattamento dei dati personali.",
+    "title": "Privacy policy"
+  },
+  "CookiePage": {
+    "metaTitle": "Cookie policy",
+    "metaDescription": "Informativa sull'uso dei cookie.",
+    "title": "Cookie policy"
+  },
+  "TermsPage": {
+    "metaTitle": "Termini e condizioni",
+    "metaDescription": "Condizioni generali di vendita dei pacchetti turistici.",
+    "title": "Termini e condizioni"
+  },
+  "Legal": {
+    "unavailable": "Il documento sarà disponibile a breve."
   },
   "NotFound": {
     "title": "Pagina non trovata",

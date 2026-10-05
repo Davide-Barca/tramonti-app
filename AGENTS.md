@@ -57,7 +57,7 @@ src/store/               Redux Toolkit, admin only
 - Every API call goes through `apiFetch(path, { schema, next: { tags, revalidate } })`. Never call `fetch` on the API directly, never skip the zod schema.
 - `queries.ts`, `actions.ts` and anything touching the API or secrets start with `import "server-only"`.
 - Cache tags are defined once per domain in `features/<domain>/` and shared by reads (site) and invalidation (admin: `updateTag` in Server Actions for read-your-own-writes, `revalidateTag(tag, "max")` otherwise).
-- **Server Components by default.** Add `"use client"` only for interactivity, as low in the tree as possible. No Redux, no client providers in the public site.
+- **Server Components by default.** Add `"use client"` only for interactivity, as low in the tree as possible. No Redux, no client providers in the public site. Only exception: `NextIntlClientProvider messages={null}` in `[locale]/layout.tsx` (next-intl `Link` needs the locale). Keep `messages={null}`: if a client component needs translations, pass it a picked subset.
 - Data comes from the Express API, is mostly static and changes rarely: fetch in Server Components with caching + tags, revalidate on demand after admin mutations.
 - Admin image uploads go to Google Cloud Storage via signed URLs (direct browser upload, never through Vercel functions).
 
@@ -66,6 +66,15 @@ src/store/               Redux Toolkit, admin only
 - Italian only for now, structured for more locales (`localePrefix: "as-needed"`, so `it` has no URL prefix).
 - Every `[locale]` layout, page and `generateMetadata` must call `initLocale(params)` from `@/i18n/locale`.
 - Public site: use `Link`, `redirect` and `getPathname` from `@/i18n/navigation`, not `next/link` / `next/navigation`.
+
+## Routes (public site)
+
+- Every public route is declared in `pathnames` in `src/i18n/routing.ts` **before** creating its folder. Keys are the internal paths (= folder structure, Italian slugs); values can be translated per locale later.
+- Hrefs are typed: `href="/chi-siamo"` or `{ pathname: "/escursioni/[slug]", params: { slug } }`. A route missing from `pathnames` is a type error.
+- Current routes: `/`, `/chi-siamo`, `/escursioni`, `/escursioni/[slug]`, `/escursioni-su-misura`, `/viaggi`, `/viaggi/[slug]`, `/apprendimento`, `/contatti`, and the legal pages `/privacy-policy`, `/cookie-policy`, `/termini-e-condizioni` in the `(legal)` route group (shared `<article>` layout, no URL segment).
+- Static pages: `generateMetadata` returns `staticPageMetadata(locale, "<Namespace>", href)` (`src/lib/seo.ts`); texts in `src/messages/it.json` under `<Namespace>` with `metaTitle`, `metaDescription`, `title`. Add new namespaces to `StaticPageNamespace`.
+- Detail pages (`[slug]`): `generateStaticParams` from the feature query, `notFound()` for unknown slugs, `Breadcrumbs` (visible + BreadcrumbList JSON-LD) and `TouristTrip` JSON-LD via `components/shared/JsonLd`.
+- Legal texts come from iubenda (`features/legal/queries.ts`, server-rendered, `IUBENDA_POLICY_ID` + `IUBENDA_TERMS_ID`). Without ids the page shows a placeholder.
 - No hardcoded UI strings in the public site: add them to `src/messages/it.json` (typed via `src/types/next-intl.d.ts`).
 
 ## SEO (mandatory for the public site)
@@ -77,10 +86,10 @@ Every component, page and HTML tag in `(site)` must follow SEO best practices:
 - Every page exports `generateMetadata` with title, description and `alternates: localeAlternates(locale, href)` (canonical + hreflang).
 - Images: `next/image` with meaningful `alt`, explicit size, `priority` only on the LCP image. Fonts: `next/font`.
 - Indexable content must be in the server-rendered HTML (no client-only rendering).
-- Add structured data (JSON-LD) where relevant. New public pages go in `src/app/sitemap.ts`.
+- Add structured data (JSON-LD) where relevant. The sitemap is built from `staticPathnames` + feature queries: new static routes appear automatically, new dynamic routes must be added to `src/app/sitemap.ts`.
 - Core Web Vitals: minimal client JS, no layout shift, lazy-load below the fold.
 - Admin is always `noindex` (metadata + `X-Robots-Tag` + robots.txt). Keep it that way.
-- SEO changes need an assertion in `e2e/seo.spec.ts`.
+- SEO changes need an assertion in `e2e/seo.spec.ts`. Static routes are tested automatically from `staticPathnames`; add a sample URL for each new dynamic route.
 
 ## Auth & security
 

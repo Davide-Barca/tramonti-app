@@ -20,6 +20,7 @@ Gotchas:
 - `@types/node` must be `^24` (Node 24 runtime); `^20` blocked Vitest 5 install (ERESOLVE).
 - Lockfile generated on Windows misses platform optional deps (e.g. `@emnapi/runtime`) → `npm ci` fails on macOS with EUSAGE. Run `npm install` once to resync (fixed 2026-10-05).
 - Files importing `server-only` throw under Vitest: `vi.mock("server-only", () => ({}))` then dynamic `await import()` (see `src/lib/api/client.test.ts`).
+- next-intl `Link` is a client component: without `NextIntlClientProvider` the build fails prerendering with an empty `Error:` (dev shows "No intl context found"). Provider lives in `[locale]/layout.tsx` with `messages={null}`. Debug empty prerender errors with `next dev` + curl.
 - `npm audit` reports 5 high (`braces` via `eslint-config-next`), dev-only. Do NOT run `npm audit fix --force`: it downgrades eslint-config-next to 14.
 
 **Why:** Avoid re-debugging the same issues on other machines/sessions.

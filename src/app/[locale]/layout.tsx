@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { NextIntlClientProvider } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { initLocale } from "@/i18n/locale";
 import { routing } from "@/i18n/routing";
@@ -38,7 +39,13 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} className={`${fontSans.variable} antialiased`}>
-      <body className="flex min-h-dvh flex-col font-sans">{children}</body>
+      <body className="flex min-h-dvh flex-col font-sans">
+        {/* Locale only (Link needs it). messages={null}: no translations in the
+            client bundle; pass a picked subset if a client component needs some. */}
+        <NextIntlClientProvider messages={null}>
+          {children}
+        </NextIntlClientProvider>
+      </body>
     </html>
   );
 }

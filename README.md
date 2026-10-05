@@ -23,6 +23,8 @@ npm run dev
 | ---------------------- | ------------------------------------------------------- |
 | `NEXT_PUBLIC_SITE_URL` | Public site URL, no trailing slash (canonical, sitemap) |
 | `API_URL`              | Express API base URL (server-only)                      |
+| `IUBENDA_POLICY_ID`    | iubenda privacy + cookie policy id (server-only)        |
+| `IUBENDA_TERMS_ID`     | iubenda terms and conditions id (server-only)           |
 
 Set them on Vercel for every environment. Never commit `.env*` files except `.env.example`.
 
@@ -52,7 +54,9 @@ public/                static assets
 src/
   app/
     [locale]/          public site root layout (i18n, SEO metadata)
-      (site)/          public pages
+      (site)/          public pages: chi-siamo, escursioni(/[slug]), escursioni-su-misura,
+                       viaggi(/[slug]), apprendimento, contatti
+        (legal)/       privacy-policy, cookie-policy, termini-e-condizioni (iubenda)
       not-found.tsx    localized 404 for notFound() calls
     (admin)/           admin root layout (noindex)
       admin/login/
@@ -65,6 +69,7 @@ src/
     admin/             admin: ui/ (shadcn), layout/, hooks/
     shared/            side-agnostic components
   features/<domain>/   types.ts (zod), queries.ts (cached reads), actions.ts (admin mutations)
+                       escursioni, viaggi (temporary fixtures until the API), legal (iubenda)
   store/               Redux Toolkit (admin only)
   i18n/                next-intl routing, request config, navigation, initLocale
   messages/            translations (it.json)
@@ -88,6 +93,7 @@ playwright.config.ts   Chromium desktop + Pixel 7, prod build on port 3100
 - **Server Components first**: add `"use client"` only where interactivity requires it.
 - **i18n**: every `[locale]` layout, page and `generateMetadata` calls `initLocale(params)`.
   Use `Link`/`redirect` from `@/i18n/navigation` in the public site, not `next/link`.
+  New route: declare it in `pathnames` (`src/i18n/routing.ts`) first; hrefs are typed.
   New locale: add it to `src/i18n/routing.ts` + `src/messages/<locale>.json`.
 - **SEO** (public site): semantic HTML, one `<h1>` per page, `generateMetadata` with
   `localeAlternates()`, `next/image` with meaningful `alt`. Admin is always `noindex`.

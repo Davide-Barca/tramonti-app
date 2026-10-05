@@ -1,22 +1,37 @@
 import type { MetadataRoute } from "next";
-import { getPathname } from "@/i18n/navigation";
-import { routing } from "@/i18n/routing";
-import { siteUrl } from "@/lib/site";
+import { getEscursioni } from "@/features/escursioni/queries";
+import { getViaggi } from "@/features/viaggi/queries";
+import { routing, staticPathnames } from "@/i18n/routing";
+import { absoluteUrl, type Href } from "@/lib/seo";
 
-// TODO: add static pages and API-driven entries (with real lastModified).
-const paths = ["/"];
-
-function absolute(locale: (typeof routing.locales)[number], href: string) {
-  return new URL(getPathname({ locale, href }), siteUrl).href;
-}
-
-export default function sitemap(): MetadataRoute.Sitemap {
-  return paths.map((href) => ({
-    url: absolute(routing.defaultLocale, href),
+function entry(
+  href: Href,
+  lastModified?: string,
+): MetadataRoute.Sitemap[number] {
+  return {
+    url: absoluteUrl(routing.defaultLocale, href),
+    lastModified,
     alternates: {
       languages: Object.fromEntries(
-        routing.locales.map((locale) => [locale, absolute(locale, href)]),
+        routing.locales.map((locale) => [locale, absoluteUrl(locale, href)]),
       ),
     },
-  }));
+  };
+}
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const [escursioni, viaggi] = await Promise.all([
+    getEscursioni(),
+    getViaggi(),
+  ]);
+
+  return [
+    ...staticPathnames.map((pathname) => entry(pathname)),
+    ...escursioni.map(({ slug, updatedAt }) =>
+      entry({ pathname: "/escursioni/[slug]", params: { slug } }, updatedAt),
+    ),
+    ...viaggi.map(({ slug, updatedAt }) =>
+      entry({ pathname: "/viaggi/[slug]", params: { slug } }, updatedAt),
+    ),
+  ];
 }

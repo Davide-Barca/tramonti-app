@@ -11,14 +11,18 @@ Done:
 
 1. Scaffold: `src/`, i18n, site/admin route groups, SEO base (03dcc3b).
 2. Prettier/ESLint/husky + Vitest/Playwright (c57d558).
-3. Code structure: component folders, `features/`, `apiFetch` + zod, `components.json`, ESLint import boundaries (see [[code-structure]]).
+3. Code structure: component folders, `features/`, `apiFetch` + zod, `components.json`, ESLint import boundaries (1ab7ea8, see [[code-structure]]).
+4. Public routes: all `[locale]/(site)` pages with placeholder markup, typed `pathnames`, metadata, Breadcrumbs + JSON-LD, dynamic sitemap, iubenda legal pages, e2e over every route (see [[public-routes]]).
 
 Order agreed: public site before admin (admin blocked on auth contract + GCS details). User wants solid structure before sharing the old project.
 
 Next (user approves each step explicitly; don't start without go-ahead):
 
 - Data layer: first `features/<domain>` once API endpoints are known; decide whether to enable Next 16 `cacheComponents`. Needs API URL + endpoint list.
-- Site layout: header, footer, brand fonts, favicon.
+- Site layout: header, footer (use `Navigation` messages + typed `Link`), brand fonts, favicon.
+- Forms: contatti + escursioni-su-misura (Server Actions, anti-spam, delivery to API/email).
+- iubenda cookie banner (CWV + consent), and real iubenda ids.
+- 301 redirects from the old site's URLs (when the old project is shared).
 - Port current design: needs path to the old React project (user will share later).
 - shadcn/ui init (`cn`, deps, theme in admin.css) + Redux Toolkit on admin.
 - GCS image upload via signed URLs (needs bucket name, public/private, bucket CORS).
@@ -29,7 +33,8 @@ Open TODOs in code:
 - Fonts are Geist placeholders (`src/lib/fonts.ts`) → brand fonts.
 - `favicon.ico` is the Next default → brand icons (`app/icon.png`, `apple-icon.png`).
 - Header/footer missing in `src/app/[locale]/(site)/layout.tsx`.
-- `NEXT_PUBLIC_SITE_URL` and `API_URL` must be set on Vercel.
+- `src/features/{escursioni,viaggi}/fixtures.ts` are temporary sample data: replace with `apiFetch` in `queries.ts` when endpoints are known, then delete them and update the e2e `detailPages` slugs.
+- `NEXT_PUBLIC_SITE_URL`, `API_URL`, `IUBENDA_POLICY_ID`, `IUBENDA_TERMS_ID` must be set on Vercel.
 
 **Why:** Lets any machine/session resume where the work stopped.
 **How to apply:** Read before proposing next steps; update this file when a step completes. See [[tramonti-rebuild-stack]], [[tooling-testing]].
