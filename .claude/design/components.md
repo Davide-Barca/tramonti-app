@@ -4,17 +4,19 @@ Primitives used by every section. All are Server Components, accept `className` 
 
 Per-component docs (purpose, when to use, props, examples) live in **`.claude/components/`**, one file per component. This file covers only the visual system they share.
 
-| Component     | Visual summary                                                                     | Doc                                                   |
-| ------------- | ---------------------------------------------------------------------------------- | ----------------------------------------------------- |
-| `Container`   | `mx-auto w-full px-4 md:px-6` + `max-w-page`/`max-w-narrow`                        | [Container](../components/site/ui/Container.md)       |
-| `Section`     | `<section>` + `py-section` (or compact `py-8 md:py-12`), tone `default`/`bg-muted` | [Section](../components/site/ui/Section.md)           |
-| `Heading`     | `font-display font-semibold tracking-tight text-foreground`, fluid sizes           | [Heading](../components/site/ui/Heading.md)           |
-| `Prose`       | `.prose` typography, `max-w-narrow`                                                | [Prose](../components/site/ui/Prose.md)               |
-| `Card`        | `rounded-card border border-border bg-background p-6`, `gap-3`                     | [Card](../components/site/ui/Card.md)                 |
-| `Breadcrumbs` | `text-sm text-muted-foreground`, `/` separators, current `text-foreground`         | [Breadcrumbs](../components/site/ui/Breadcrumbs.md)   |
-| `SiteHeader`  | `border-b border-border`, brand left, nav right, wraps on mobile                   | [SiteHeader](../components/site/layout/SiteHeader.md) |
-| `NavLink`     | `text-muted-foreground`, hover `text-foreground`, current `text-primary underline` | [NavLink](../components/site/layout/NavLink.md)       |
-| `SiteFooter`  | `bg-muted border-t border-border`, 3-column grid, bottom bar `text-sm`             | [SiteFooter](../components/site/layout/SiteFooter.md) |
+| Component               | Visual summary                                                                         | Doc                                                   |
+| ----------------------- | -------------------------------------------------------------------------------------- | ----------------------------------------------------- |
+| `Container`             | `mx-auto w-full px-4 md:px-6` + `max-w-page`/`max-w-narrow`                            | [Container](../components/site/ui/Container.md)       |
+| `Section`               | `<section>` + `py-section` (or compact `py-8 md:py-12`), tone `default`/`bg-muted`     | [Section](../components/site/ui/Section.md)           |
+| `Heading`               | `font-display font-semibold tracking-tight text-foreground`, fluid sizes               | [Heading](../components/site/ui/Heading.md)           |
+| `Prose`                 | `.prose` typography, `max-w-narrow`                                                    | [Prose](../components/site/ui/Prose.md)               |
+| `Card`                  | `rounded-card border border-border bg-background p-6`, `gap-3`                         | [Card](../components/site/ui/Card.md)                 |
+| `Button` / `ButtonLink` | pill, `primary` (`bg-primary`) / `secondary` (border), sizes `md` `h-10` / `lg` `h-12` | [Button](../components/site/ui/Button.md)             |
+| `Badge`                 | pill `text-sm`, `bg-background/70 backdrop-blur-sm`, border                            | [Badge](../components/site/ui/Badge.md)               |
+| `Breadcrumbs`           | `text-sm text-muted-foreground`, `/` separators, current `text-foreground`             | [Breadcrumbs](../components/site/ui/Breadcrumbs.md)   |
+| `SiteHeader`            | `border-b border-border`, brand left, nav right, wraps on mobile                       | [SiteHeader](../components/site/layout/SiteHeader.md) |
+| `NavLink`               | `text-muted-foreground`, hover `text-foreground`, current `text-primary underline`     | [NavLink](../components/site/layout/NavLink.md)       |
+| `SiteFooter`            | `bg-muted border-t border-border`, 3-column grid, bottom bar `text-sm`                 | [SiteFooter](../components/site/layout/SiteFooter.md) |
 
 ## Recipe: new primitive
 
@@ -27,6 +29,4 @@ Per-component docs (purpose, when to use, props, examples) live in **`.claude/co
 
 ### Planned (not built yet)
 
-- `Button` / button-styled `Link`: `primary` (fill `bg-primary text-primary-foreground hover:bg-primary-hover`), `secondary` (border `border-border`, text `foreground`), sizes `md`/`lg`. Build it with the first CTA.
-- `Badge`: `bg-accent text-primary text-sm`, for categories/durations.
 - `Image` wrapper around `next/image` with aspect ratio + `rounded-card`.

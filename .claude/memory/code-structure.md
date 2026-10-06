@@ -12,6 +12,7 @@ Decided 2026-10-05 with the user, before porting the old design ("solid structur
 - `src/lib/api/client.ts` → `apiFetch(path, { schema, next })`: server-only, `API_URL` env, zod validation mandatory (Express API has no typed contract).
 - `components.json` written by hand (shadcn not initialized yet: no `cn`/`lib/utils`, no deps). Aliases point to `@/components/admin/*`, CSS `src/styles/admin.css`.
 - ESLint `no-restricted-imports` enforces boundaries (site ✗ admin/store/redux/next/link; admin ✗ site; shared ✗ both). Verified with throwaway files.
+- `src/assets/images/` (created 2026-10-06) for static site images imported in code; no `public/` folder yet (create it only for files that need a fixed URL: PDFs, verification files). Admin-managed images go to GCS.
 - Rejected: atomic design folders, everything colocated in `app/`, monorepo.
 
 **Why:** Biggest risk = admin client code (shadcn/Redux) leaking into the public bundle and hurting CWV/SEO.

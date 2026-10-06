@@ -10,6 +10,7 @@ const twMerge = extendTailwindMerge({
       container: ["page", "narrow"],
       spacing: ["section"],
       radius: ["card"],
+      "text-shadow": ["glow"],
     },
   },
 });

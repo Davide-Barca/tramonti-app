@@ -16,5 +16,6 @@ describe("cn", () => {
     expect(cn("py-section", "py-4")).toBe("py-4");
     expect(cn("max-w-page", "max-w-narrow")).toBe("max-w-narrow");
     expect(cn("rounded-card", "rounded-none")).toBe("rounded-none");
+    expect(cn("text-shadow-glow", "text-shadow-none")).toBe("text-shadow-none");
   });
 });

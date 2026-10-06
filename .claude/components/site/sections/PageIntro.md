@@ -8,7 +8,7 @@ Top block of every page: optional breadcrumbs, **the page's only `h1`**, optiona
 
 ## When to use
 
-- First element of every page in `src/app/[locale]/(site)/`, always.
+- First element of every page in `src/app/[locale]/(site)/`, **except the home page**, which starts with `Hero` (it renders the h1 there).
 
 ## When not to use
 
@@ -18,9 +18,6 @@ Top block of every page: optional breadcrumbs, **the page's only `h1`**, optiona
 
 ```tsx
 import { PageIntro } from "@/components/site/sections/PageIntro";
-
-// Home
-<PageIntro title={t("title")} size="display" />
 
 // Static page
 <PageIntro

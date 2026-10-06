@@ -16,6 +16,7 @@ Component docs live in `.claude/components/` (one file per component, index in i
 @memory/code-structure.md
 @memory/public-routes.md
 @memory/styling.md
+@memory/home-page.md
 @memory/project-status.md
 @memory/docs-sync.md
 @memory/component-docs.md

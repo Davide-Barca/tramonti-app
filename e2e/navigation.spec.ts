@@ -118,3 +118,24 @@ test.describe("Footer", () => {
     }
   });
 });
+
+test.describe("Home hero", () => {
+  test("renders the h1 and CTAs to escursioni pages", async ({
+    page,
+    baseURL,
+  }) => {
+    await page.goto("/");
+
+    const main = page.getByRole("main");
+    await expect(main.getByRole("heading", { level: 1 })).toContainText(
+      "pace interiore",
+    );
+
+    await main.getByRole("link", { name: "Scopri le escursioni" }).click();
+    await expect(page).toHaveURL(`${baseURL}/escursioni`);
+
+    await page.goto("/");
+    await main.getByRole("link", { name: "Escursioni su misura" }).click();
+    await expect(page).toHaveURL(`${baseURL}/escursioni-su-misura`);
+  });
+});

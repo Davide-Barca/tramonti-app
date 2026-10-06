@@ -72,6 +72,9 @@
 
   /* Shapes */
   --radius-card: 0.75rem;
+
+  /* Effects: soft warm halo behind emphasized hero words (text-shadow-glow) */
+  --text-shadow-glow: 0 0 1.5rem var(--sand-50), 0 0 3rem var(--sand-100);
 }
 
 @layer base {

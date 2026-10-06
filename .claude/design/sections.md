@@ -7,7 +7,7 @@ A **section** is a page block built from `Section` + `Heading` + primitives. A *
 ```
 <SiteHeader />                (layout)
 <main>                        (layout, one per page)
-  <PageIntro />               always first: breadcrumbs + the only h1 + optional lead
+  <PageIntro />               always first (home: <Hero />): breadcrumbs + the only h1 + optional lead
   <Section …>…</Section>      content blocks, alternate tone default/muted
 </main>
 <SiteFooter />                (layout)
@@ -30,5 +30,4 @@ A **section** is a page block built from `Section` + `Heading` + primitives. A *
 
 ### Planned
 
-- `Hero` (home): `display` h1, lead, primary CTA, LCP image with `priority`.
 - `FeatureGrid`, `CtaBand` (`tone="muted"` or `bg-primary` band with `text-primary-foreground`), `ContactBlock`.

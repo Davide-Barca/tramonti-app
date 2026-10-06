@@ -57,8 +57,14 @@ Common rhythm: stack inside a block `gap-4`; card padding `p-6`; grid gap `gap-6
 
 No shadows yet: separate surfaces with `border-border` or `bg-muted`.
 
+## Effects
+
+| Token              | Value                                                 | Use                                                      |
+| ------------------ | ----------------------------------------------------- | -------------------------------------------------------- |
+| `text-shadow-glow` | `0 0 1.5rem var(--sand-50), 0 0 3rem var(--sand-100)` | soft warm halo on emphasized hero words (`HeroEmphasis`) |
+
 ## Adding a token
 
 1. Add it to `@theme inline` in `site.css` (colors: map a primitive, add the primitive to `:root` if needed; check contrast).
-2. Font size / spacing / container / radius tokens: register the name in `extendTailwindMerge` in `src/lib/utils.ts` and add a case to `src/lib/utils.test.ts`, otherwise `cn()` drops it.
+2. Font size / spacing / container / radius / text-shadow tokens: register the name in `extendTailwindMerge` in `src/lib/utils.ts` and add a case to `src/lib/utils.test.ts`, otherwise `cn()` drops it.
 3. Document it in this file.

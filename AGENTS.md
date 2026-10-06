@@ -50,6 +50,7 @@ src/components/admin/    admin: ui/ (shadcn-generated, alias in components.json)
 src/components/shared/   side-agnostic only (e.g. JSON-LD, icons)
 src/features/<domain>/   types.ts (zod schemas + types), queries.ts (cached reads), actions.ts (admin Server Actions)
 src/lib/api/client.ts    apiFetch(): server-only fetch to the Express API, zod-validated
+src/assets/images/       static site images, imported in code (`import img from "@/assets/images/…"`) for next/image
 src/store/               Redux Toolkit, admin only
 ```
 
@@ -89,11 +90,11 @@ Design details (values, component APIs, section recipes, checklist): **`.claude/
 - **Tailwind utilities inline** in JSX. Reuse = React components (`Container`, `Section`, `Heading`…), never `@apply` classes. `@apply` is allowed only inside `.prose`.
 - `src/styles/site.css` holds only: primitive palette (`:root`, `--sand-*`, `--olive-*`), theme tokens (`@theme inline`), `@layer base` (body colors, `text-wrap`, global `:focus-visible` outline, `::selection`), `.prose` for HTML we cannot add classes to (iubenda, rich text).
 - **Semantic tokens only** in components: `background`, `foreground`, `muted`, `muted-foreground`, `border`, `primary`, `primary-hover`, `primary-foreground`, `accent`. Tailwind's default palette is disabled (`--color-*: initial`): `bg-neutral-100` etc. do not exist. Never use primitives (`--sand-*`, `--olive-*`) or hex outside `site.css`. New color = new semantic token.
-- Other tokens: fonts `font-sans`, `font-display`; fluid headings `text-display|h1|h2|h3` (`clamp()`); `max-w-page` (72rem), `max-w-narrow` (42rem); `py-section` (fluid); `rounded-card`. Adding a size/spacing/container/radius token? Register it in `extendTailwindMerge` in `src/lib/utils.ts` too, or `cn()` will drop it.
+- Other tokens: fonts `font-sans`, `font-display`; fluid headings `text-display|h1|h2|h3` (`clamp()`); `text-shadow-glow` (hero emphasis); `max-w-page` (72rem), `max-w-narrow` (42rem); `py-section` (fluid); `rounded-card`. Adding a size/spacing/container/radius token? Register it in `extendTailwindMerge` in `src/lib/utils.ts` too, or `cn()` will drop it.
 - No arbitrary values (`w-[37px]`, `text-[#fff]`): add a token. `rem`-based scale, mobile-first (`md:`/`lg:` add on top).
 - No layout shift: explicit image sizes; state changes (active, hover) must not change element size (underline/color, not bold).
 - Every component accepts `className` and merges it with `cn()` (`@/lib/utils`). Variants with `cva` inside the component, no long ternaries in class strings.
-- Building blocks: `components/site/ui/` (`Container`, `Section`, `Heading`, `Prose`, `Card`, `Breadcrumbs`) and page blocks `components/site/sections/` (`PageIntro` first on every page, `TourList`). Per-component docs in `.claude/components/`; visual summary and recipes in `.claude/design/components.md` and `sections.md`.
+- Building blocks: `components/site/ui/` (`Container`, `Section`, `Heading`, `Prose`, `Card`, `Button`/`ButtonLink`, `Badge`, `Breadcrumbs`) and page blocks `components/site/sections/` (`PageIntro` first on every page **except home**, `Hero` first on home only, `TourList`). Navigation CTAs are `ButtonLink` (real `href`), `Button` only for actions. Per-component docs in `.claude/components/`; visual summary and recipes in `.claude/design/components.md` and `sections.md`.
 - Palette is a placeholder (warm sand neutrals + military green `primary`, AA contrast checked). No dark mode for now.
 
 ## SEO (mandatory for the public site)

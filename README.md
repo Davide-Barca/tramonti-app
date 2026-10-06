@@ -51,8 +51,8 @@ AGENTS.md              rules for AI agents (canonical; CLAUDE.md imports it)
 .husky/pre-commit      runs lint-staged (eslint --fix + prettier) on staged files
 .vscode/               format on save, recommended extensions
 e2e/                   Playwright specs (seo, admin)
-public/                static assets
 src/
+  assets/images/       site images imported in code (next/image: size + blur placeholder)
   app/
     [locale]/          public site root layout (i18n, SEO metadata)
       (site)/          public pages: chi-siamo, escursioni(/[slug]), escursioni-su-misura,

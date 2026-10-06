@@ -20,7 +20,13 @@
     "mainNav": "Navigazione principale"
   },
   "HomePage": {
-    "title": "Tramonti"
+    "hero": {
+      "badge": "Escursioni e viaggi",
+      "title": "Il posto ideale per ritrovare la tua <em>pace interiore</em>",
+      "lead": "Sentieri, panorami e luoghi da scoprire con calma. Testo da definire.",
+      "primaryCta": "Scopri le escursioni",
+      "secondaryCta": "Escursioni su misura"
+    }
   },
   "AboutPage": {
     "metaTitle": "Chi siamo",

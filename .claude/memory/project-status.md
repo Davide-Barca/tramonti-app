@@ -17,6 +17,7 @@ Done:
 6. Styling foundation: tokens + palette in site.css, `cn`/`cva`, Container/Section/Heading/Prose/Card, PageIntro/TourList applied to every page (see [[styling]]); design system docs in `.claude/design/`.
 7. Footer: `SiteFooter` (brand, contacts, Instagram/Facebook, Esplora incl. new `/lavora-con-noi` page, legal links, copyright + P.IVA); company data placeholders in `src/lib/site.ts`; e2e in `navigation.spec.ts`.
 8. Component docs: `.claude/components/` with one doc per existing component (14) + index/template; rule in AGENTS.md that every new/changed component updates its doc.
+9. Home hero: `Hero` + `HeroEmphasis`, `Button`/`ButtonLink`, `Badge`, `text-shadow-glow` token; gradient background (first photo removed by user; `Hero` supports `image` + light scrim); 2 CTAs → /escursioni, /escursioni-su-misura. Header unchanged. Other home sections: wait for user instructions.
 
 Order agreed: public site before admin (admin blocked on auth contract + GCS details). User wants solid structure before sharing the old project.
 
@@ -36,6 +37,7 @@ Open TODOs in code:
 - `src/lib/auth/session.ts` is a presence-only stub: anyone with a `session` cookie gets in. Must not ship to production until wired to the Express backend (token format and login endpoint unknown).
 - Fonts are Geist placeholders (`src/lib/fonts.ts`) → brand fonts.
 - `favicon.ico` is the Next default → brand icons (`app/icon.png`, `apple-icon.png`).
+- Home hero needs a photo: add to `src/assets/images/`, pass `image` to `Hero`, re-measure contrast.
 - `company` in `src/lib/site.ts` is placeholder data (name, P.IVA, address, email, phone, license, insurance, Instagram/Facebook URLs): user has no real info yet (2026-10-06). Must be replaced before production.
 - `src/features/{escursioni,viaggi}/fixtures.ts` are temporary sample data: replace with `apiFetch` in `queries.ts` when endpoints are known, then delete them and update the e2e `detailPages` slugs.
 - `NEXT_PUBLIC_SITE_URL`, `API_URL`, `IUBENDA_POLICY_ID`, `IUBENDA_TERMS_ID` must be set on Vercel.
