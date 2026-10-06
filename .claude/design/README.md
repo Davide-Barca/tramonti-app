@@ -2,7 +2,7 @@
 
 Source of truth for **how components and sections look and are built**. Every agent (Claude, Codex, Cursor…) reads it before creating or restyling anything in `src/components/site/` or `src/app/[locale]/`. The admin portal is out of scope (shadcn/ui, own theme in `src/styles/admin.css`).
 
-Rules that must never be broken live in `AGENTS.md` ("Styling", "SEO"). This folder explains the system behind them: values, components, recipes.
+Rules that must never be broken live in `AGENTS.md` ("Styling", "SEO"). This folder explains the system behind them: values, visual patterns, recipes. Per-component docs (purpose, when to use, props, examples) live in `.claude/components/`.
 
 | File                           | Read it when                                                                |
 | ------------------------------ | --------------------------------------------------------------------------- |
@@ -19,7 +19,7 @@ Rules that must never be broken live in `AGENTS.md` ("Styling", "SEO"). This fol
 2. Reuse existing primitives first. Need something new? Follow the recipe in `components.md` / `sections.md`.
 3. Use only the tokens in `tokens.md`. Missing value → add a token (see "Adding a token"), never an arbitrary value.
 4. Verify with `checklist.md` (and a screenshot at 1280px and Pixel 7 width).
-5. **Keep this folder in sync**: new token, component, variant or section → update the matching file in the same change.
+5. **Keep docs in sync**: new/changed component or section → its file in `.claude/components/` (+ index); new token, variant or visual pattern → the matching file here. Same change.
 
 ## Status
 

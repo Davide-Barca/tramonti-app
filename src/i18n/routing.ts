@@ -19,6 +19,7 @@ export const routing = defineRouting({
     "/viaggi/[slug]": "/viaggi/[slug]",
     "/apprendimento": "/apprendimento",
     "/contatti": "/contatti",
+    "/lavora-con-noi": "/lavora-con-noi",
     "/privacy-policy": "/privacy-policy",
     "/cookie-policy": "/cookie-policy",
     "/termini-e-condizioni": "/termini-e-condizioni",

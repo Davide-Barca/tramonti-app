@@ -42,6 +42,7 @@ export type StaticPageNamespace =
   | "TripsPage"
   | "LearningPage"
   | "ContactPage"
+  | "WorkWithUsPage"
   | "PrivacyPage"
   | "CookiePage"
   | "TermsPage";

@@ -5,8 +5,10 @@ Save new project memories/decisions there — not in the global `~/.claude/proje
 `.claude/memory/` is committed to git on purpose: memory is shared across all clients/machines. Never gitignore it. Only `.claude/settings.local.json` stays local (gitignored).
 
 Design system docs live in `.claude/design/`: read them before building or styling public-site components, sections or pages, and update them in the same change.
+Component docs live in `.claude/components/` (one file per component, index in its `README.md`): read a component's doc before using or changing it; create/update it with every component change.
 
 @design/README.md
+@components/README.md
 @memory/MEMORY.md
 @memory/tramonti-rebuild-stack.md
 @memory/seo-rules-frontend.md
@@ -16,5 +18,6 @@ Design system docs live in `.claude/design/`: read them before building or styli
 @memory/styling.md
 @memory/project-status.md
 @memory/docs-sync.md
+@memory/component-docs.md
 @memory/no-commit-proposals.md
 @memory/caveman-replies.md

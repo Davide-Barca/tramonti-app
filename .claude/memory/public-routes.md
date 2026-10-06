@@ -13,6 +13,7 @@ Decided 2026-10-05 with the user.
 - Legal pages from iubenda: `/privacy-policy`, `/cookie-policy`, `/termini-e-condizioni` in `(legal)` group, fetched server-side via iubenda public API (`/api/privacy-policy/{id}/no-markup`, `.../cookie-policy/no-markup`, `/api/terms-and-conditions/{id}/no-markup`, response `{ success, content | error }`). Privacy + cookie share one id. iubenda h1s are demoted to h2.
 - next-intl `pathnames` enabled with identity mapping: typed hrefs, single route list for sitemap/e2e (`staticPathnames`).
 - Header menu (user choice 2026-10-05): Chi siamo, Escursioni, Viaggi, Contatti only; Escursioni su misura + Apprendimento excluded; no skip link for now.
+- `/lavora-con-noi` added 2026-10-06 (linked from the footer only). Footer "Esplora" lists all pages; column labels are `<p>` (user choice); socials: Instagram + Facebook.
 - Escursioni/viaggi data from temporary fixtures until the API endpoints are known.
 
 **Why:** User wanted the full route skeleton with SEO before porting the old design.

@@ -46,7 +46,8 @@ Set them on Vercel for every environment. Never commit `.env*` files except `.en
 
 ```
 AGENTS.md              rules for AI agents (canonical; CLAUDE.md imports it)
-.claude/               project memory (memory/) + design system docs (design/), versioned and shared
+.claude/               memory/ (project memory), design/ (design system), components/ (one doc per
+                       component for AI agents); versioned and shared
 .husky/pre-commit      runs lint-staged (eslint --fix + prettier) on staged files
 .vscode/               format on save, recommended extensions
 e2e/                   Playwright specs (seo, admin)
@@ -55,7 +56,7 @@ src/
   app/
     [locale]/          public site root layout (i18n, SEO metadata)
       (site)/          public pages: chi-siamo, escursioni(/[slug]), escursioni-su-misura,
-                       viaggi(/[slug]), apprendimento, contatti
+                       viaggi(/[slug]), apprendimento, contatti, lavora-con-noi
         (legal)/       privacy-policy, cookie-policy, termini-e-condizioni (iubenda)
       not-found.tsx    localized 404 for notFound() calls
     (admin)/           admin root layout (noindex)
@@ -65,7 +66,7 @@ src/
     robots.ts, sitemap.ts
     **/_components/    components used by a single route (colocated)
   components/
-    site/              public site: layout/ (SiteHeader, NavLink, nav-items),
+    site/              public site: layout/ (SiteHeader, SiteFooter, NavLink, nav-items),
                        sections/ (PageIntro, TourList), ui/ (Container, Section, Heading, Prose, Card, Breadcrumbs)
     admin/             admin: ui/ (shadcn), layout/, hooks/
     shared/            side-agnostic components
@@ -79,7 +80,8 @@ src/
     auth/              session DAL (verifySession) + constants
     seo.ts             canonical/hreflang helper, OG locales
     utils.ts           cn() = clsx + tailwind-merge (aware of custom tokens)
-    fonts.ts, site.ts
+    fonts.ts           next/font setup (placeholder Geist)
+    site.ts            siteUrl + company data (placeholders)
   styles/              site.css (Tailwind v4: palette, tokens, base, .prose), admin.css (shadcn/ui)
   types/               global type augmentation (next-intl)
   proxy.ts             i18n routing + optimistic /admin guard

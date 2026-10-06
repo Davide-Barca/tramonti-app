@@ -67,3 +67,54 @@ test.describe("Header navigation", () => {
     );
   });
 });
+
+const footerExplore = [
+  "Chi siamo",
+  "Escursioni",
+  "Escursioni su misura",
+  "Viaggi",
+  "Apprendimento",
+  "Contatti",
+  "Lavora con noi",
+];
+const footerLegal = ["Privacy policy", "Cookie policy", "Termini e condizioni"];
+
+test.describe("Footer", () => {
+  for (const path of staticPathnames) {
+    test(`${path} renders one footer with page and legal links`, async ({
+      page,
+    }) => {
+      await page.goto(path);
+
+      const footer = page.getByRole("contentinfo");
+      await expect(footer).toHaveCount(1);
+      await expect(
+        footer.getByRole("navigation", { name: "Esplora" }).getByRole("link"),
+      ).toHaveText(footerExplore);
+      await expect(
+        footer
+          .getByRole("navigation", { name: "Informazioni legali" })
+          .getByRole("link"),
+      ).toHaveText(footerLegal);
+      await expect(footer.getByText(/P\.IVA \d{11}/)).toBeVisible();
+    });
+  }
+
+  test("legal links reach their pages", async ({ page, baseURL }) => {
+    await page.goto("/");
+    await page
+      .getByRole("contentinfo")
+      .getByRole("link", { name: "Privacy policy" })
+      .click();
+    await expect(page).toHaveURL(`${baseURL}/privacy-policy`);
+  });
+
+  test("social links open in a new tab safely", async ({ page }) => {
+    await page.goto("/");
+    for (const name of ["Instagram", "Facebook"]) {
+      const link = page.getByRole("contentinfo").getByRole("link", { name });
+      await expect(link).toHaveAttribute("target", "_blank");
+      await expect(link).toHaveAttribute("rel", /noopener/);
+    }
+  });
+});

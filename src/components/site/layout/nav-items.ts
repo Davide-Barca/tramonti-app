@@ -12,3 +12,21 @@ export const mainNavItems = [
   { href: "/viaggi", label: "trips" },
   { href: "/contatti", label: "contact" },
 ] as const satisfies readonly NavItem[];
+
+/** Footer "Esplora": main pages + secondary pages not in the header. */
+export const footerNavItems = [
+  { href: "/chi-siamo", label: "about" },
+  { href: "/escursioni", label: "excursions" },
+  { href: "/escursioni-su-misura", label: "customExcursions" },
+  { href: "/viaggi", label: "trips" },
+  { href: "/apprendimento", label: "learning" },
+  { href: "/contatti", label: "contact" },
+  { href: "/lavora-con-noi", label: "workWithUs" },
+] as const satisfies readonly NavItem[];
+
+/** Footer legal links (mandatory pages). */
+export const legalNavItems = [
+  { href: "/privacy-policy", label: "privacy" },
+  { href: "/cookie-policy", label: "cookie" },
+  { href: "/termini-e-condizioni", label: "terms" },
+] as const satisfies readonly NavItem[];

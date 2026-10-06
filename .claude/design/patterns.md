@@ -18,6 +18,7 @@
 - States change **color/underline only**, never weight or size (no layout shift).
 - Focus: global `:focus-visible` outline in `primary` (base layer). Never remove it.
 - Navigation is always a real `Link` with `href`; `<button>` only for actions.
+- External links (social): `target="_blank" rel="noopener noreferrer"` + `<span className="sr-only">` announcing the new tab.
 
 ## Surfaces
 

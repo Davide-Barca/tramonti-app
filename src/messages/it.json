@@ -12,6 +12,7 @@
     "trips": "Viaggi",
     "learning": "Apprendimento",
     "contact": "Contatti",
+    "workWithUs": "Lavora con noi",
     "privacy": "Privacy policy",
     "cookie": "Cookie policy",
     "terms": "Termini e condizioni",
@@ -53,6 +54,11 @@
     "metaDescription": "Contatti: descrizione da definire.",
     "title": "Contatti"
   },
+  "WorkWithUsPage": {
+    "metaTitle": "Lavora con noi",
+    "metaDescription": "Lavora con noi: descrizione da definire.",
+    "title": "Lavora con noi"
+  },
   "PrivacyPage": {
     "metaTitle": "Privacy policy",
     "metaDescription": "Informativa sul trattamento dei dati personali.",
@@ -70,6 +76,17 @@
   },
   "Legal": {
     "unavailable": "Il documento sarà disponibile a breve."
+  },
+  "Footer": {
+    "tagline": "Escursioni e viaggi: descrizione da definire.",
+    "explore": "Esplora",
+    "legal": "Informazioni legali",
+    "follow": "Seguici",
+    "copyright": "© {year} {company}",
+    "vat": "P.IVA {vat}",
+    "license": "Licenza {license}",
+    "insurance": "Polizza {insurance}",
+    "newTab": "(si apre in una nuova scheda)"
   },
   "NotFound": {
     "title": "Pagina non trovata",

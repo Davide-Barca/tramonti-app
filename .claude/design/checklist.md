@@ -11,4 +11,5 @@
 - [ ] Server Component unless interactivity requires `"use client"` (as low as possible).
 - [ ] Unit test for variants/logic; e2e if SEO-relevant markup changed.
 - [ ] `npm run check` passes (and `npm run test:e2e` for routing/SEO changes).
-- [ ] `.claude/design/` updated (tokens, components, sections) in the same change.
+- [ ] Component doc created/updated in `.claude/components/` (+ index row in its README).
+- [ ] `.claude/design/` updated if tokens, variants or visual patterns changed.

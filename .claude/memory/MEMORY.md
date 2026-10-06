@@ -7,4 +7,5 @@
 - [Project status](project-status.md) — done steps, next steps, open TODOs (auth stub, fonts, favicon, header/footer)
 - [No commit proposals](no-commit-proposals.md) — never run/propose commit commands unless user asks; at most say a commit is advisable
 - [Caveman replies](caveman-replies.md) — always reply in caveman style (chat only; code/docs/commits normal)
+- [Component docs](component-docs.md) — one AI-agent doc per component in .claude/components/, updated with every component change
 - [Docs sync](docs-sync.md) — AGENTS.md is the canonical agent rules file (top priority); keep it + README + memory in sync

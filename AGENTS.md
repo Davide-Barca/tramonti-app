@@ -22,7 +22,8 @@ Rules for every AI agent working in this repo. This file is the canonical source
 
 1. Read `.claude/memory/project-status.md` (done steps, next steps, open TODOs) and `.claude/memory/MEMORY.md` (index of project decisions).
 2. Before creating or restyling any public-site component, section or page: read `.claude/design/` (start from `README.md`). It is the design system reference (tokens, components, sections, patterns, checklist) for every agent.
-3. Work on `dev`. `main` is production. Never push, merge into `main` or start the next roadmap step without explicit user approval.
+3. Before using, changing or creating a component: read its doc in `.claude/components/` (index in `README.md`, one file per component mirroring `src/components/` and route `_components/`). It explains what the component is for, when to use it and how.
+4. Work on `dev`. `main` is production. Never push, merge into `main` or start the next roadmap step without explicit user approval.
 
 ## Commands
 
@@ -53,6 +54,7 @@ src/store/               Redux Toolkit, admin only
 ```
 
 - A component starts in the route's `_components/` and moves to `src/components/` only when a second route needs it.
+- **Component docs are mandatory**: every new component, and every change to an existing one (props, variants, behavior, usage, location), creates/updates its file in `.claude/components/` **in the same change**, following the template in `.claude/components/README.md` (purpose, when to use, when not to use, usage example, props, rules, related), and updates the index there. Moving or deleting a component moves/deletes its doc. This applies to site, shared, admin and route-local (`_components/`) components.
 - Pages in `app/` stay thin: fetch, metadata, composition.
 - **Import boundaries are enforced by ESLint** (`no-restricted-imports` in `eslint.config.mjs`): the site cannot import `components/admin`, `store`, Redux; the admin cannot import `components/site`; shared code (`lib`, `features`, `i18n`, `components/shared`) imports neither side. The site also cannot import `next/link` or `redirect`/`useRouter`/`usePathname` from `next/navigation`. Do not disable these rules: move the code to the right place instead.
 - Every API call goes through `apiFetch(path, { schema, next: { tags, revalidate } })`. Never call `fetch` on the API directly, never skip the zod schema.
@@ -72,11 +74,12 @@ src/store/               Redux Toolkit, admin only
 
 - Every public route is declared in `pathnames` in `src/i18n/routing.ts` **before** creating its folder. Keys are the internal paths (= folder structure, Italian slugs); values can be translated per locale later.
 - Hrefs are typed: `href="/chi-siamo"` or `{ pathname: "/escursioni/[slug]", params: { slug } }`. A route missing from `pathnames` is a type error.
-- Current routes: `/`, `/chi-siamo`, `/escursioni`, `/escursioni/[slug]`, `/escursioni-su-misura`, `/viaggi`, `/viaggi/[slug]`, `/apprendimento`, `/contatti`, and the legal pages `/privacy-policy`, `/cookie-policy`, `/termini-e-condizioni` in the `(legal)` route group (shared `<article>` layout, no URL segment).
+- Current routes: `/`, `/chi-siamo`, `/escursioni`, `/escursioni/[slug]`, `/escursioni-su-misura`, `/viaggi`, `/viaggi/[slug]`, `/apprendimento`, `/contatti`, `/lavora-con-noi`, and the legal pages `/privacy-policy`, `/cookie-policy`, `/termini-e-condizioni` in the `(legal)` route group (shared `<article>` layout, no URL segment).
 - Static pages: `generateMetadata` returns `staticPageMetadata(locale, "<Namespace>", href)` (`src/lib/seo.ts`); texts in `src/messages/it.json` under `<Namespace>` with `metaTitle`, `metaDescription`, `title`. Add new namespaces to `StaticPageNamespace`.
 - Detail pages (`[slug]`): `generateStaticParams` from the feature query, `notFound()` for unknown slugs, `Breadcrumbs` (visible + BreadcrumbList JSON-LD) and `TouristTrip` JSON-LD via `components/shared/JsonLd`.
 - Legal texts come from iubenda (`features/legal/queries.ts`, server-rendered, `IUBENDA_POLICY_ID` + `IUBENDA_TERMS_ID`). Without ids the page shows a placeholder.
 - Header: `components/site/layout/SiteHeader.tsx` (Server Component, minimal styling with semantic tokens until the old design is ported; mark the current page with underline, not bold, to avoid layout shift) rendered by the `(site)` layout. Main menu items live in `components/site/layout/nav-items.ts` (`mainNavItems`: typed `StaticPathname` + `Navigation` message key); currently Chi siamo, Escursioni, Viaggi, Contatti. Escursioni su misura, Apprendimento and legal pages are not in the header. `NavLink` is the only client part (`usePathname` for `aria-current="page"`, prefix match so detail pages mark their section); labels are translated on the server and passed as children.
+- Footer: `components/site/layout/SiteFooter.tsx` (Server Component, no client JS) rendered after `<main>` by the `(site)` layout. Link lists in `nav-items.ts`: `footerNavItems` ("Esplora": all pages incl. Escursioni su misura, Apprendimento, Lavora con noi) and `legalNavItems`. Column labels are `<p>` + `nav aria-labelledby`, not headings. Company data (name, VAT number, address, email, phone, optional travel-agency license/insurance, social URLs) lives in `company` in `src/lib/site.ts`: **placeholders until the real data is provided**. External links: `target="_blank" rel="noopener noreferrer"` + `sr-only` "new tab" text.
 - No hardcoded UI strings in the public site: add them to `src/messages/it.json` (typed via `src/types/next-intl.d.ts`).
 
 ## Styling (public site)
@@ -90,7 +93,7 @@ Design details (values, component APIs, section recipes, checklist): **`.claude/
 - No arbitrary values (`w-[37px]`, `text-[#fff]`): add a token. `rem`-based scale, mobile-first (`md:`/`lg:` add on top).
 - No layout shift: explicit image sizes; state changes (active, hover) must not change element size (underline/color, not bold).
 - Every component accepts `className` and merges it with `cn()` (`@/lib/utils`). Variants with `cva` inside the component, no long ternaries in class strings.
-- Building blocks: `components/site/ui/` (`Container`, `Section`, `Heading`, `Prose`, `Card`, `Breadcrumbs`) and page blocks `components/site/sections/` (`PageIntro` first on every page, `TourList`). APIs and recipes in `.claude/design/components.md` and `sections.md`.
+- Building blocks: `components/site/ui/` (`Container`, `Section`, `Heading`, `Prose`, `Card`, `Breadcrumbs`) and page blocks `components/site/sections/` (`PageIntro` first on every page, `TourList`). Per-component docs in `.claude/components/`; visual summary and recipes in `.claude/design/components.md` and `sections.md`.
 - Palette is a placeholder (warm sand neutrals + military green `primary`, AA contrast checked). No dark mode for now.
 
 ## SEO (mandatory for the public site)
@@ -131,4 +134,5 @@ When you add or change files, folders, scripts, tooling or conventions, update *
 1. `AGENTS.md` (this file): rules and conventions agents must follow.
 2. `README.md`: human-facing setup, scripts and structure.
 3. `.claude/memory/`: decisions and status (`project-status.md` at least), with the index in `MEMORY.md`. The folder is versioned on purpose: shared across machines and agents.
-4. `.claude/design/`: when tokens, components, variants, sections or visual patterns change.
+4. `.claude/components/`: one doc per component, created/updated with every component change (see "Code organization").
+5. `.claude/design/`: when tokens, variants, sections or visual patterns change.
