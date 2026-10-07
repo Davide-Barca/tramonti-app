@@ -69,7 +69,7 @@ src/store/               Redux Toolkit, admin only
 
 - Italian only for now, structured for more locales (`localePrefix: "as-needed"`, so `it` has no URL prefix).
 - Every `[locale]` layout, page and `generateMetadata` must call `initLocale(params)` from `@/i18n/locale`.
-- Dates/numbers: format with next-intl (`getFormatter()` on the server); time zone is fixed to `Europe/Rome` in `src/i18n/request.ts`. Plurals via ICU messages.
+- Dates/numbers: format with next-intl (`getFormatter()` on the server); time zone fixed to `Europe/Rome` (`TIME_ZONE` in `src/lib/dates.ts`, used by `src/i18n/request.ts`). Day comparisons with `romeDay()`, day ranges with `formatDayRange()` (not `format.dateTimeRange`: it pads Italian days). Plurals via ICU messages.
 - Public site: use `Link`, `redirect` and `getPathname` from `@/i18n/navigation`, not `next/link` / `next/navigation`.
 
 ## Routes (public site)
@@ -96,7 +96,7 @@ Design details (values, component APIs, section recipes, checklist): **`.claude/
 - No layout shift: explicit image sizes; state changes (active, hover) must not change element size (underline/color, not bold).
 - Icons: `Icon` from `@/components/shared/Icon` with data from the vanilla `lucide` package (`import { MapPin } from "lucide"`), server-rendered, zero client JS. **Never `lucide-react` in the public site** (client component in v1; reserved for admin/shadcn). Icons are decorative: meaning goes in text (`sr-only` if needed).
 - Every component accepts `className` and merges it with `cn()` (`@/lib/utils`). Variants with `cva` inside the component, no long ternaries in class strings.
-- Building blocks: `components/site/ui/` (`Container`, `Section`, `Heading`, `Prose`, `Card`, `Button`/`ButtonLink`, `Badge`, `Breadcrumbs`) and page blocks `components/site/sections/` (`PageIntro` first on every page **except home**, `Hero` first on home only, `TourList`). Home sections so far: `Hero`, then `UpcomingExcursions` (route-local, `(site)/_components/`), next planned "Perché Tramonti". Navigation CTAs are `ButtonLink` (real `href`), `Button` only for actions. Per-component docs in `.claude/components/`; visual summary and recipes in `.claude/design/components.md` and `sections.md`.
+- Building blocks: `components/site/ui/` (`Container`, `Section`, `Heading`, `Prose`, `Card`, `Button`/`ButtonLink`, `Badge`, `Breadcrumbs`) and page blocks `components/site/sections/` (`PageIntro` first on every page **except home**, `Hero` first on home only, `TourList`). Home sections so far: `Hero`, `UpcomingTours` (escursioni, then viaggi), `WhyTramonti` (route-local in `(site)/_components/`, cards via generic `TourCard` + `ExcursionCard`/`TripCard` adapters). Further sections only on user instructions.
 - Palette is a placeholder (warm sand neutrals + military green `primary`, AA contrast checked). No dark mode for now.
 
 ## SEO (mandatory for the public site)
@@ -104,7 +104,7 @@ Design details (values, component APIs, section recipes, checklist): **`.claude/
 Every component, page and HTML tag in `(site)` must follow SEO best practices:
 
 - Semantic HTML: exactly one `<h1>` per page, ordered headings, `header`/`nav`/`main`/`article`/`section`/`footer`. The `(site)` layout already renders `<main>`: pages must not add another.
-- Navigation through real links (`Link` with `href`), never `onClick` navigation. `<button>` only for actions.
+- Navigation through real links (`Link` with `href`), never `onClick` navigation. `<button>` only for actions. Link text describes the destination (no "Scopri di più").
 - Every page exports `generateMetadata` with title, description and `alternates: localeAlternates(locale, href)` (canonical + hreflang).
 - Images: `next/image` with meaningful `alt`, explicit size (or `fill` in an `aspect-*` box), `preload` only on the LCP image (Next 16: `priority` is deprecated, don't use it). Remote hosts must be listed in `images.remotePatterns` (`next.config.ts`; now only `picsum.photos` placeholders). Fonts: `next/font`.
 - Indexable content must be in the server-rendered HTML (no client-only rendering).

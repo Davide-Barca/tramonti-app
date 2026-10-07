@@ -31,11 +31,40 @@
       "title": "Prossime escursioni",
       "viewAll": "Tutte le escursioni",
       "empty": "Nessuna escursione in programma al momento."
+    },
+    "upcomingTrips": {
+      "title": "Prossimi viaggi",
+      "viewAll": "Tutti i viaggi",
+      "empty": "Nessun viaggio in programma al momento."
+    },
+    "why": {
+      "title": "Perché Tramonti",
+      "lead": "Escursioni di gruppo pensate per vivere la montagna in sicurezza e in buona compagnia. Testo da definire.",
+      "items": {
+        "guides": {
+          "title": "Guide certificate AIGAE",
+          "text": "Ogni escursione è accompagnata da guide esperte e certificate AIGAE."
+        },
+        "zones": {
+          "title": "Appennino e Dolomiti",
+          "text": "Itinerari selezionati tra i sentieri più belli dell'Appennino e delle Dolomiti."
+        },
+        "groups": {
+          "title": "In gruppo con appassionati",
+          "text": "Cammini insieme ad altri amanti del trekking, con il ritmo giusto per il gruppo."
+        },
+        "custom": {
+          "title": "Escursioni su misura",
+          "text": "Vuoi un'uscita privata o per il tuo gruppo? La organizziamo insieme.",
+          "link": "Scopri le escursioni su misura"
+        }
+      }
     }
   },
-  "Excursion": {
+  "Tour": {
     "date": "Data",
     "zone": "Zona",
+    "destination": "Destinazione",
     "difficulty": "Difficoltà",
     "spots": "Posti disponibili",
     "zones": {

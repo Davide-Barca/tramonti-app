@@ -4,42 +4,38 @@ Source: `src/app/[locale]/(site)/_components/ExcursionCard.tsx` · async Server 
 
 ## Purpose
 
-Card of one scheduled excursion: photo (4:3), date, title linking to the detail page, and details list with icons: zone, difficulty, spots left ("Completo" at 0).
+Adapter `Escursione` → `TourCard`: one-day date, details zone (MapPin), difficulty (Gauge), spots left (Users; "Completo" at 0).
 
 ## When to use
 
-- Lists of dated excursions. Today: home "Prossime escursioni".
+- Inside `UpcomingTours` for escursioni (home). Future `/escursioni` list: promote `TourCard` + this adapter to `src/components/site/` (and move the docs).
 
 ## When not to use
 
-- Viaggi or generic content: `TourList` / `Card`.
-- If `/escursioni` (or another route) needs it: **move it** to `src/components/site/` (e.g. `sections/` or a new `cards/` group) and move this doc accordingly (component rule: promote on second use).
+- Viaggi: `TripCard`.
 
 ## Usage
 
 ```tsx
-import { ExcursionCard } from "./ExcursionCard";
-
-<li className="flex">
-  <ExcursionCard excursion={excursion} className="w-full" />
-</li>;
+<UpcomingTours …>
+  {excursions.map((excursion) => (
+    <ExcursionCard key={excursion.slug} excursion={excursion} className="w-full" />
+  ))}
+</UpcomingTours>
 ```
 
 ## Props
 
-| Prop        | Type         | Default  | Notes                                      |
-| ----------- | ------------ | -------- | ------------------------------------------ |
-| `excursion` | `Escursione` | required | from `features/escursioni` (zod-validated) |
-| `className` | `string`     | –        | merged into the `Card`                     |
+| Prop        | Type         | Default  | Notes                       |
+| ----------- | ------------ | -------- | --------------------------- |
+| `excursion` | `Escursione` | required | `features/escursioni` (zod) |
+| `className` | `string`     | –        | passed to `TourCard`        |
 
 ## Rules and notes
 
-- Data fields (user choice, 2026-10-07): title, date, spots available, zone, difficulty, image. Add fields only on request.
-- Date: `<time dateTime="YYYY-MM-DD">` formatted with next-intl `getFormatter` (`timeZone: "Europe/Rome"` set in `src/i18n/request.ts`), e.g. "dom 18 ottobre 2026".
-- Details are a `<dl>`: decorative `Icon` + `sr-only` term (`Excursion.zone|difficulty|spots`) + value. Labels/enums from `Excursion` messages (`zones.*`, `difficulties.*`, plural `spotsLeft`).
-- Image: `next/image` `fill` in `aspect-4/3` box (no layout shift), `sizes` for the 1/2/3-column grid, lazy (never `preload` here). Placeholders from Lorem Picsum (`picsum.photos` allowed in `next.config.ts` `images.remotePatterns`).
-- Title is an `h3` (section title is the `h2`); link on the title only.
+- Fields (user choice 2026-10-07): title, date, spots, zone, difficulty, image. Add only on request.
+- Labels/enums from `Tour` messages (`zone`, `difficulty`, `spots`, `zones.*`, `difficulties.*`, plural `spotsLeft`).
 
 ## Related
 
-- [UpcomingExcursions](UpcomingExcursions.md), [Card](../../site/ui/Card.md), [Icon](../../shared/Icon.md).
+- [TourCard](TourCard.md), [TripCard](TripCard.md).

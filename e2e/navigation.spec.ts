@@ -131,7 +131,9 @@ test.describe("Home hero", () => {
       "pace interiore",
     );
 
-    await main.getByRole("link", { name: "Scopri le escursioni" }).click();
+    await main
+      .getByRole("link", { name: "Scopri le escursioni", exact: true })
+      .click();
     await expect(page).toHaveURL(`${baseURL}/escursioni`);
 
     await page.goto("/");
@@ -182,5 +184,63 @@ test.describe("Home upcoming excursions", () => {
       .getByRole("link", { name: "Tutte le escursioni" })
       .click();
     await expect(page).toHaveURL(`${baseURL}/escursioni`);
+  });
+});
+
+test.describe("Home why Tramonti", () => {
+  test("lists the strengths and links to custom excursions", async ({
+    page,
+    baseURL,
+  }) => {
+    await page.goto("/");
+
+    const section = page.getByRole("region", { name: "Perché Tramonti" });
+    await expect(
+      section.getByRole("heading", { level: 2, name: "Perché Tramonti" }),
+    ).toBeVisible();
+    await expect(section.getByRole("heading", { level: 3 })).toHaveCount(4);
+
+    await section
+      .getByRole("link", { name: "Scopri le escursioni su misura" })
+      .click();
+    await expect(page).toHaveURL(`${baseURL}/escursioni-su-misura`);
+  });
+});
+
+test.describe("Home upcoming trips", () => {
+  test("lists the next trips with a date range and details", async ({
+    page,
+    baseURL,
+  }) => {
+    await page.goto("/");
+
+    const section = page.getByRole("region", { name: "Prossimi viaggi" });
+    const cards = section.getByRole("listitem").filter({
+      has: page.getByRole("heading", { level: 3 }),
+    });
+    await expect(cards).toHaveCount(3);
+
+    const first = cards.first();
+    await expect(first.locator("time")).toHaveAttribute(
+      "datetime",
+      /^\d{4}-\d{2}-\d{2}$/,
+    );
+    for (const label of ["Destinazione", "Difficoltà", "Posti disponibili"]) {
+      await expect(
+        first.getByRole("term").filter({ hasText: label }),
+      ).toHaveCount(1);
+    }
+
+    await first.getByRole("heading", { level: 3 }).getByRole("link").click();
+    await expect(page).toHaveURL(new RegExp(`^${baseURL}/viaggi/[a-z0-9-]+$`));
+  });
+
+  test("links to the full trips list", async ({ page, baseURL }) => {
+    await page.goto("/");
+    await page
+      .getByRole("region", { name: "Prossimi viaggi" })
+      .getByRole("link", { name: "Tutti i viaggi" })
+      .click();
+    await expect(page).toHaveURL(`${baseURL}/viaggi`);
   });
 });

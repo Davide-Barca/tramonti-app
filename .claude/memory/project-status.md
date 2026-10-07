@@ -18,7 +18,8 @@ Done:
 7. Footer: `SiteFooter` (brand, contacts, Instagram/Facebook, Esplora incl. new `/lavora-con-noi` page, legal links, copyright + P.IVA); company data placeholders in `src/lib/site.ts`; e2e in `navigation.spec.ts`.
 8. Component docs: `.claude/components/` with one doc per existing component (14) + index/template; rule in AGENTS.md that every new/changed component updates its doc.
 9. Home hero: `Hero` + `HeroEmphasis`, `Button`/`ButtonLink`, `Badge`, `text-shadow-glow` token; gradient background (first photo removed by user; `Hero` supports `image` + light scrim); 2 CTAs → /escursioni, /escursioni-su-misura. Header unchanged. Other home sections: wait for user instructions.
-10. Home "Prossime escursioni": `UpcomingExcursions` + `ExcursionCard` (route-local), shared `Icon` (vanilla lucide), escursioni schema extended (date, spotsAvailable, zone, difficulty, image), `getUpcomingEscursioni`, next-intl timeZone Europe/Rome, picsum remotePatterns, Hero `priority`→`preload` + `text-md` fix. Next: "Perché Tramonti" (3rd home section).
+10. Home "Prossime escursioni": `UpcomingExcursions` + `ExcursionCard` (route-local), shared `Icon` (vanilla lucide), escursioni schema extended (date, spotsAvailable, zone, difficulty, image), `getUpcomingEscursioni`, next-intl timeZone Europe/Rome, picsum remotePatterns, Hero `priority`→`preload` + `text-md` fix.
+11. Home "Perché Tramonti" + "Prossimi viaggi": `WhyTramonti` route-local section (muted band, 4 icon items, link to /escursioni-su-misura); trips section via generic `UpcomingTours`/`TourCard` + `TripCard`; viaggi schema (startDate, endDate, spotsAvailable, destination, difficulty, image), `getUpcomingViaggi`, `src/lib/dates.ts` (romeDay, formatDayRange); e2e. Next home sections: wait for user instructions.
 
 Order agreed: public site before admin (admin blocked on auth contract + GCS details). User wants solid structure before sharing the old project.
 

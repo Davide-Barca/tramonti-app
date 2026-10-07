@@ -38,10 +38,10 @@ Find names at lucide.dev (PascalCase export from `lucide`).
 
 ## Rules and notes
 
-- Icons accompany text: keep them decorative and put the meaning in text (visible or `sr-only`), as in `ExcursionCard`.
+- Icons accompany text: keep them decorative and put the meaning in text (visible or `sr-only`), as in `TourCard`.
 - Stroke width 2, 24×24 viewBox (Lucide defaults). Don't scale stroke per icon.
 - Lives in `components/shared/` (ESLint boundary: no site/admin imports).
 
 ## Related
 
-- [ExcursionCard](../routes/home/ExcursionCard.md), [UpcomingExcursions](../routes/home/UpcomingExcursions.md).
+- [TourCard](../routes/home/TourCard.md), [UpcomingTours](../routes/home/UpcomingTours.md).

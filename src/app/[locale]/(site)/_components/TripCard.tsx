@@ -1,31 +1,36 @@
 import { Gauge, MapPin, Users } from "lucide";
 import { getTranslations } from "next-intl/server";
-import type { Escursione } from "@/features/escursioni/types";
+import type { Viaggio } from "@/features/viaggi/types";
 import { TourCard } from "./TourCard";
 
-type ExcursionCardProps = {
-  excursion: Escursione;
+type TripCardProps = {
+  trip: Viaggio;
   className?: string;
 };
 
-/** Escursione → TourCard: one day, zone, difficulty, spots left. */
-export async function ExcursionCard({
-  excursion,
-  className,
-}: ExcursionCardProps) {
+/** Viaggio → TourCard: date range, destination, difficulty, spots left. */
+export async function TripCard({ trip, className }: TripCardProps) {
   const t = await getTranslations("Tour");
-  const { slug, title, date, zone, difficulty, spotsAvailable, image } =
-    excursion;
+  const {
+    slug,
+    title,
+    startDate,
+    endDate,
+    destination,
+    difficulty,
+    spotsAvailable,
+    image,
+  } = trip;
 
   return (
     <TourCard
       className={className}
-      href={{ pathname: "/escursioni/[slug]", params: { slug } }}
+      href={{ pathname: "/viaggi/[slug]", params: { slug } }}
       title={title}
       image={image}
-      date={{ start: date }}
+      date={{ start: startDate, end: endDate }}
       details={[
-        { icon: MapPin, label: t("zone"), value: t(`zones.${zone}`) },
+        { icon: MapPin, label: t("destination"), value: destination },
         {
           icon: Gauge,
           label: t("difficulty"),

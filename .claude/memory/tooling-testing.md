@@ -25,6 +25,9 @@ Gotchas:
 - `@/i18n/navigation` `usePathname` with `pathnames` returns the internal route key (e.g. `/escursioni/[slug]`), not the real URL.
 - Next 16 `next/image`: `priority` is deprecated → use `preload`. Remote redirects (e.g. picsum → fastly.picsum) are followed without re-checking `remotePatterns` (`maximumRedirects`, default 3).
 - `lucide-react` v1 icons are client components (`"use client"` in `Icon.mjs`): site uses vanilla `lucide` + `components/shared/Icon` instead. `lucide-react` was installed then removed (2026-10-07); add it back only for admin/shadcn.
+- Intl `formatRange` (next-intl `format.dateTimeRange`) pads Italian days ("04–10 luglio", "02 novembre"): use `formatDayRange` from `src/lib/dates.ts`.
+- next-intl's `DateTimeFormatOptions` type is narrower than `Intl.DateTimeFormatOptions`: type helpers with the next-intl one.
+- Playwright `getByRole(..., { name })` matches substrings: use `exact: true` when one label contains another ("Scopri le escursioni" vs "Scopri le escursioni su misura").
 - `text-md` is not a Tailwind class (silently generates nothing): use `text-base`.
 - `npm audit` reports 5 high (`braces` via `eslint-config-next`), dev-only. Do NOT run `npm audit fix --force`: it downgrades eslint-config-next to 14.
 

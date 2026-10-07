@@ -1,5 +1,6 @@
 import "server-only";
 
+import { romeDay } from "@/lib/dates";
 import { escursioniFixtures } from "./fixtures";
 import { escursioneSchema, type Escursione } from "./types";
 
@@ -14,11 +15,6 @@ export async function getEscursioni(): Promise<Escursione[]> {
 export async function getEscursione(slug: string): Promise<Escursione | null> {
   const all = await getEscursioni();
   return all.find((e) => e.slug === slug) ?? null;
-}
-
-/** Day in Europe/Rome as YYYY-MM-DD (comparable with Escursione.date). */
-function romeDay(date: Date): string {
-  return date.toLocaleDateString("sv-SE", { timeZone: "Europe/Rome" });
 }
 
 /**

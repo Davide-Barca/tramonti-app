@@ -72,7 +72,7 @@ src/
     admin/             admin: ui/ (shadcn), layout/, hooks/
     shared/            side-agnostic components (JsonLd, Icon)
   features/<domain>/   types.ts (zod), queries.ts (cached reads), actions.ts (admin mutations)
-                       escursioni, viaggi (temporary fixtures until the API), legal (iubenda)
+                       escursioni, viaggi (temporary fixtures with Lorem Picsum images until the API), legal (iubenda)
   store/               Redux Toolkit (admin only)
   i18n/                next-intl routing, request config, navigation, initLocale
   messages/            translations (it.json)
@@ -81,6 +81,7 @@ src/
     auth/              session DAL (verifySession) + constants
     seo.ts             canonical/hreflang helper, OG locales
     utils.ts           cn() = clsx + tailwind-merge (aware of custom tokens)
+    dates.ts           Europe/Rome day helpers (romeDay, formatDayRange)
     fonts.ts           next/font setup (placeholder Geist)
     site.ts            siteUrl + company data (placeholders)
   styles/              site.css (Tailwind v4: palette, tokens, base, .prose), admin.css (shadcn/ui)

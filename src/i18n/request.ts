@@ -1,5 +1,6 @@
 import { hasLocale } from "next-intl";
 import { getRequestConfig } from "next-intl/server";
+import { TIME_ZONE } from "@/lib/dates";
 import { routing } from "./routing";
 
 export default getRequestConfig(async ({ requestLocale }) => {
@@ -11,7 +12,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
   return {
     locale,
     // Fixed zone: dates render the same on server and client (Italian business).
-    timeZone: "Europe/Rome",
+    timeZone: TIME_ZONE,
     messages: (await import(`../messages/${locale}.json`)).default,
   };
 });
