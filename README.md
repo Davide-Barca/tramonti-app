@@ -53,6 +53,7 @@ AGENTS.md              rules for AI agents (canonical; CLAUDE.md imports it)
 e2e/                   Playwright specs (seo, admin)
 src/
   assets/images/       site images imported in code (next/image: size + blur placeholder)
+  (icons)              lucide (vanilla) data rendered by components/shared/Icon: no client JS
   app/
     [locale]/          public site root layout (i18n, SEO metadata)
       (site)/          public pages: chi-siamo, escursioni(/[slug]), escursioni-su-misura,
@@ -69,7 +70,7 @@ src/
     site/              public site: layout/ (SiteHeader, SiteFooter, NavLink, nav-items),
                        sections/ (PageIntro, TourList), ui/ (Container, Section, Heading, Prose, Card, Breadcrumbs)
     admin/             admin: ui/ (shadcn), layout/, hooks/
-    shared/            side-agnostic components
+    shared/            side-agnostic components (JsonLd, Icon)
   features/<domain>/   types.ts (zod), queries.ts (cached reads), actions.ts (admin mutations)
                        escursioni, viaggi (temporary fixtures until the API), legal (iubenda)
   store/               Redux Toolkit (admin only)

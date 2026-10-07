@@ -15,3 +15,25 @@ export async function getEscursione(slug: string): Promise<Escursione | null> {
   const all = await getEscursioni();
   return all.find((e) => e.slug === slug) ?? null;
 }
+
+/** Day in Europe/Rome as YYYY-MM-DD (comparable with Escursione.date). */
+function romeDay(date: Date): string {
+  return date.toLocaleDateString("sv-SE", { timeZone: "Europe/Rome" });
+}
+
+/**
+ * Next excursions from `from` (default: now) on, soonest first.
+ * Evaluated at render time: on static pages the list refreshes with the
+ * page's revalidation, not at midnight.
+ */
+export async function getUpcomingEscursioni(
+  limit: number,
+  from: Date = new Date(),
+): Promise<Escursione[]> {
+  const today = romeDay(from);
+  const all = await getEscursioni();
+  return all
+    .filter((e) => e.date >= today)
+    .sort((a, b) => a.date.localeCompare(b.date))
+    .slice(0, limit);
+}

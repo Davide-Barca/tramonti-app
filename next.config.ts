@@ -4,6 +4,11 @@ import createNextIntlPlugin from "next-intl/plugin";
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
+  images: {
+    // TODO: placeholder images (Lorem Picsum) until real photos; add the GCS
+    // bucket host here for admin-uploaded images.
+    remotePatterns: [{ protocol: "https", hostname: "picsum.photos" }],
+  },
   experimental: {
     // Multiple root layouts ([locale] + (admin)) need a global 404.
     globalNotFound: true,

@@ -39,7 +39,7 @@ export function Hero({ title, badge, lead, actions, image }: HeroProps) {
             src={image.src}
             alt={image.alt}
             fill
-            priority
+            preload
             sizes="100vw"
             placeholder={typeof image.src === "string" ? "empty" : "blur"}
             className="-z-20 object-cover"
@@ -61,7 +61,9 @@ export function Hero({ title, badge, lead, actions, image }: HeroProps) {
         <Heading as="h1" size="display" className="max-w-4xl font-light">
           {title}
         </Heading>
-        {lead && <p className="max-w-narrow text-lg text-foreground">{lead}</p>}
+        {lead && (
+          <p className="max-w-narrow text-base text-foreground">{lead}</p>
+        )}
         {actions && (
           <div className="mt-2 flex w-full flex-col items-stretch gap-3 sm:w-auto sm:flex-row sm:items-center">
             {actions}

@@ -10,9 +10,11 @@ Decided 2026-10-06 from a reference mockup (full-bleed photo, centered badge + b
 User choices:
 
 - Build **only the hero** for now; other home sections wait for the user's instructions (don't propose/build them unprompted).
-- Two CTAs instead of a search bar: "Scopri le escursioni" → `/escursioni` (primary), "Escursioni su misura" → `/escursioni-su-misura` (secondary).
+- Two CTAs instead of a search bar: "Scopri le escursioni" → `/escursioni` (primary), "Prossimi viaggi" → `/viaggi` (secondary; changed by the user on 2026-10-07, was "Escursioni su misura").
 - **Header must not change** (no overlay/transparent variant, no CTA button, no route-group restructuring).
 - No logo strip. A photo (Dolomites) was tried on 2026-10-06 and removed by the user (didn't fit): hero shows the token gradient. `Hero` keeps photo support (static import + light scrim); lead uses `text-foreground` because `muted-foreground` measured 3.1:1 over a photo.
+- 2026-10-07: user edited hero copy (badge "Escursioni di gruppo tra Appennino e Dolomiti", AIGAE guides lead) and CTAs ("Prossimi viaggi" → `/viaggi`, size md). Home order agreed: 2 "Prossime escursioni" (built: `UpcomingExcursions` + `ExcursionCard`, route-local), 3 "Perché Tramonti" (not built yet).
+- Card fields (user choice): title, date, spots available, zone, difficulty, image (Lorem Picsum placeholders), icons where possible; mobile = single column. More fields only on request.
 
 **Why:** User wants to drive the home sections step by step.
 **How to apply:** Hero is the home's first block and renders the h1 (exception to "PageIntro first"). See [[styling]], [[component-docs]], [[project-status]].

@@ -26,10 +26,16 @@
 - Cards: `bg-background` + `border-border` + `rounded-card`; on a `muted` section the card stays `bg-background` for contrast.
 - No shadows for now.
 
-## Images (when added)
+## Icons
+
+- `Icon` + vanilla `lucide` data (server SVG). Default `size-4`, inherit color; use `text-primary` for detail icons in cards.
+- Always next to text that carries the meaning; label-only lists use `<dl>` with `sr-only` terms.
+
+## Images
 
 - `next/image` with explicit `width`/`height` or `fill` inside an `aspect-*` box (no layout shift), meaningful `alt` (empty `alt=""` only if decorative).
-- `priority` only on the LCP image (home hero / detail cover); everything else lazy.
+- `preload` only on the LCP image (home hero / detail cover); everything else lazy (default). Next 16 deprecated `priority`.
+- Card images: `fill` inside `relative aspect-4/3` + `sizes` matching the grid columns.
 - Rounded with `rounded-card` when inside cards.
 
 ## Long text

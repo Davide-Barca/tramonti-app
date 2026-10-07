@@ -135,7 +135,52 @@ test.describe("Home hero", () => {
     await expect(page).toHaveURL(`${baseURL}/escursioni`);
 
     await page.goto("/");
-    await main.getByRole("link", { name: "Escursioni su misura" }).click();
-    await expect(page).toHaveURL(`${baseURL}/escursioni-su-misura`);
+    await main.getByRole("link", { name: "Prossimi viaggi" }).click();
+    await expect(page).toHaveURL(`${baseURL}/viaggi`);
+  });
+});
+
+test.describe("Home upcoming excursions", () => {
+  test("lists the next excursions with details and links", async ({
+    page,
+    baseURL,
+  }) => {
+    await page.goto("/");
+
+    const section = page.getByRole("region", { name: "Prossime escursioni" });
+    await expect(
+      section.getByRole("heading", { level: 2, name: "Prossime escursioni" }),
+    ).toBeVisible();
+
+    const cards = section.getByRole("listitem").filter({
+      has: page.getByRole("heading", { level: 3 }),
+    });
+    await expect(cards).toHaveCount(3);
+
+    const first = cards.first();
+    await expect(first.locator("time")).toHaveAttribute(
+      "datetime",
+      /^\d{4}-\d{2}-\d{2}$/,
+    );
+    await expect(first.getByRole("img")).toHaveAttribute("alt", /\S/);
+    for (const label of ["Zona", "Difficoltà", "Posti disponibili"]) {
+      await expect(
+        first.getByRole("term").filter({ hasText: label }),
+      ).toHaveCount(1);
+    }
+
+    await first.getByRole("heading", { level: 3 }).getByRole("link").click();
+    await expect(page).toHaveURL(
+      new RegExp(`^${baseURL}/escursioni/[a-z0-9-]+$`),
+    );
+  });
+
+  test("links to the full excursions list", async ({ page, baseURL }) => {
+    await page.goto("/");
+    await page
+      .getByRole("region", { name: "Prossime escursioni" })
+      .getByRole("link", { name: "Tutte le escursioni" })
+      .click();
+    await expect(page).toHaveURL(`${baseURL}/escursioni`);
   });
 });

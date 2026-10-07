@@ -15,6 +15,7 @@ Per-component docs (purpose, when to use, props, examples) live in **`.claude/co
 | `Badge`                 | pill `text-sm`, `bg-background/70 backdrop-blur-sm`, border                            | [Badge](../components/site/ui/Badge.md)               |
 | `Breadcrumbs`           | `text-sm text-muted-foreground`, `/` separators, current `text-foreground`             | [Breadcrumbs](../components/site/ui/Breadcrumbs.md)   |
 | `SiteHeader`            | `border-b border-border`, brand left, nav right, wraps on mobile                       | [SiteHeader](../components/site/layout/SiteHeader.md) |
+| `Icon` (shared)         | lucide SVG, `size-4` default, `currentColor`; decorative, `text-primary` for details   | [Icon](../components/shared/Icon.md)                  |
 | `NavLink`               | `text-muted-foreground`, hover `text-foreground`, current `text-primary underline`     | [NavLink](../components/site/layout/NavLink.md)       |
 | `SiteFooter`            | `bg-muted border-t border-border`, 3-column grid, bottom bar `text-sm`                 | [SiteFooter](../components/site/layout/SiteFooter.md) |
 

@@ -10,6 +10,8 @@ export default getRequestConfig(async ({ requestLocale }) => {
 
   return {
     locale,
+    // Fixed zone: dates render the same on server and client (Italian business).
+    timeZone: "Europe/Rome",
     messages: (await import(`../messages/${locale}.json`)).default,
   };
 });

@@ -28,10 +28,10 @@ import { ButtonLink } from "@/components/site/ui/Button";
   lead={t("hero.lead")}
   actions={
     <>
-      <ButtonLink href="/escursioni" size="lg">
+      <ButtonLink href="/escursioni" size="md">
         {t("hero.primaryCta")}
       </ButtonLink>
-      <ButtonLink href="/escursioni-su-misura" variant="secondary" size="lg">
+      <ButtonLink href="/viaggi" variant="secondary" size="md">
         {t("hero.secondaryCta")}
       </ButtonLink>
     </>
@@ -54,10 +54,10 @@ Message: `"title": "Il posto ideale per ritrovare la tua <em>pace interiore</em>
 ## Rules and notes
 
 - Sits **below** the normal header (header unchanged, user decision): the hero is viewport-tall, so on small screens its bottom is just below the fold.
-- Photo = LCP image: `next/image` `fill`, `priority`, `sizes="100vw"`, `object-cover`. Only the hero image gets `priority`. Alt text must describe the photo (from `it.json` or data).
+- Photo = LCP image: `next/image` `fill`, `preload` (Next 16: `priority` is deprecated), `sizes="100vw"`, `object-cover`. Only the hero image gets `preload`. Alt text must describe the photo (from `it.json` or data).
 - With a photo, `Hero` adds a light scrim `bg-linear-to-b from-background/90 via-background/70 to-background/20` so dark text stays readable. Adding/changing the photo → measure text contrast on it (hide text, sample the darkest background pixel behind h1 and lead; need ≥ 4.5:1) at 1280px, 1920px and Pixel 7.
 - Currently **no photo** (user removed the first one, 2026-10-06): the gradient is shown. Put the photo in `src/assets/images/`, import it in the home page and pass `image={{ src, alt }}`; alt text in `it.json` (`HomePage.hero.imageAlt`).
-- No logo strip, no search bar, no header overlay (user choices, 2026-10-06).
+- No logo strip, no search bar, no header overlay (user choices, 2026-10-06). CTAs (user edit 2026-10-07): "Scopri le escursioni" → `/escursioni`, "Prossimi viaggi" → `/viaggi`, size `md`.
 
 ## Related
 

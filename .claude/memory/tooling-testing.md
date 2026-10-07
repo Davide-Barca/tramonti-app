@@ -23,6 +23,9 @@ Gotchas:
 - next-intl `Link` is a client component: without `NextIntlClientProvider` the build fails prerendering with an empty `Error:` (dev shows "No intl context found"). Provider lives in `[locale]/layout.tsx` with `messages={null}`. Debug empty prerender errors with `next dev` + curl.
 - Vitest globals are off → Testing Library does not auto-cleanup; `vitest.setup.ts` registers `afterEach(cleanup)` (missing it caused "Found multiple elements").
 - `@/i18n/navigation` `usePathname` with `pathnames` returns the internal route key (e.g. `/escursioni/[slug]`), not the real URL.
+- Next 16 `next/image`: `priority` is deprecated → use `preload`. Remote redirects (e.g. picsum → fastly.picsum) are followed without re-checking `remotePatterns` (`maximumRedirects`, default 3).
+- `lucide-react` v1 icons are client components (`"use client"` in `Icon.mjs`): site uses vanilla `lucide` + `components/shared/Icon` instead. `lucide-react` was installed then removed (2026-10-07); add it back only for admin/shadcn.
+- `text-md` is not a Tailwind class (silently generates nothing): use `text-base`.
 - `npm audit` reports 5 high (`braces` via `eslint-config-next`), dev-only. Do NOT run `npm audit fix --force`: it downgrades eslint-config-next to 14.
 
 **Why:** Avoid re-debugging the same issues on other machines/sessions.

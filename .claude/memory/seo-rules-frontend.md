@@ -17,7 +17,7 @@ All code/components/HTML on the public website frontend (`(site)` route group) m
 - Semantic HTML: one `<h1>` per page, ordered heading hierarchy, `<header>/<nav>/<main>/<article>/<section>/<footer>`, real `<a href>` via `next/link` (no onClick navigation), `<button>` only for actions.
 - Metadata API: `generateMetadata`/`metadata` per page (title, description, canonical, openGraph, twitter, alternates/hreflang ready for future locales), `lang="it"` on `<html>`.
 - `sitemap.ts`, `robots.ts`, JSON-LD structured data (Organization/LocalBusiness/BreadcrumbList etc. as fits).
-- `next/image` with meaningful `alt`, width/height, `priority` on LCP image; `next/font` to avoid CLS.
+- `next/image` with meaningful `alt`, width/height, `preload` on LCP image (Next 16 deprecated `priority`); `next/font` to avoid CLS.
 - Prefer Server Components / static rendering so content is in initial HTML; avoid client-only rendering of indexable content.
 - Core Web Vitals: minimal client JS, no layout shift, lazy below-the-fold.
 - Not required for `(admin)` — admin should be `noindex`.

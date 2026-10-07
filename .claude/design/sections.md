@@ -20,6 +20,10 @@ A **section** is a page block built from `Section` + `Heading` + primitives. A *
 | `PageIntro` | `Section spacing="compact"` + `border-b`, breadcrumbs, the page h1, lead `text-lg text-muted-foreground` | [PageIntro](../components/site/sections/PageIntro.md) |
 | `TourList`  | card grid `gap-6 sm:grid-cols-2 lg:grid-cols-3`, empty state                                             | [TourList](../components/site/sections/TourList.md)   |
 
+## Home page order
+
+1. `Hero` 2. `UpcomingExcursions` 3. "Perché Tramonti" (planned). Further sections only on user instructions.
+
 ## Recipe: new section
 
 1. Used by one page only → `app/…/<route>/_components/`. Used by 2+ pages → `components/site/sections/`.
